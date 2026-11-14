@@ -104,17 +104,17 @@ window.WLA_CONFIG = {
        year: leave null if unknown                                       */
   artworksArePlaceholder: false,
   artworks: [
-    { id: 1, title: "Family Portrait", category: "portrait", medium: "Graphite & charcoal on Strathmore Vellum", year: 2026,
-      dimensions: "A0 (79 × 93 cm)", hours: 126,
-      description: "126 hours later, I understand what it means to trust the process. Maybe you don't have to have it all figured out. Maybe you just have to keep showing up. And maybe, that's how we become.",
-      image: "assets/images/artwork/family-portrait-2026.jpg", width: 1080, height: 767, featured: true, size: "wide", note: "my latest piece",
-      alt: "Large graphite and charcoal portrait of three smiling family members side by side" },
-
-    { id: 2, title: "The Silver Watch", category: "mixed", medium: "Graphite & charcoal with silver leaf", year: 2026,
+    { id: 1, title: "The Silver Watch", category: "mixed", medium: "Graphite & charcoal with silver leaf", year: 2026,
       hours: 37,
       description: "There's one thing in this portrait that isn't charcoal. I drew every other line; the silver leaf on the watch decided for itself, and it shifts with the light every time you walk past.",
-      image: "assets/images/artwork/silver-watch-portrait-2026.jpg", width: 1080, height: 1350, featured: true, size: "tall", note: "can you spot it?",
+      image: "assets/images/artwork/silver-watch-portrait-2026.jpg", width: 1080, height: 1350, featured: true, size: "large", note: "my latest piece",
       alt: "Charcoal portrait of a smiling man in a cap and glasses, arms crossed, wearing a watch with a silver-leaf face" },
+
+    { id: 2, title: "Family Portrait", category: "portrait", medium: "Graphite & charcoal on Strathmore Vellum", year: 2026,
+      dimensions: "A0 (79 × 93 cm)", hours: 126,
+      description: "126 hours later, I understand what it means to trust the process. Maybe you don't have to have it all figured out. Maybe you just have to keep showing up. And maybe, that's how we become.",
+      image: "assets/images/artwork/family-portrait-2026.jpg", width: 1080, height: 767, featured: true, size: "wide", note: "126 hours of patience",
+      alt: "Large graphite and charcoal portrait of three smiling family members side by side" },
 
     { id: 3, title: "Unseen but Not Forgotten", category: "portrait", medium: "Graphite & charcoal on Strathmore Bristol 400", year: 2021,
       dimensions: "A3",
