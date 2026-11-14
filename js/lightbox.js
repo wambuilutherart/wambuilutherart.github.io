@@ -19,12 +19,16 @@
     img.classList.remove("is-swapping");
     void img.offsetWidth; // restart the "smudge-in" animation
     img.src = a.image;
-    img.alt = a.alt || (a.title + " — " + a.medium + ", " + a.year + ((a.placeholder != null ? a.placeholder : window.WLA_CONFIG.artworksArePlaceholder) ? " (example placeholder image)" : ""));
+    img.alt = a.alt || (a.title + " — " + a.medium + (a.year ? ", " + a.year : "") + ((a.placeholder != null ? a.placeholder : window.WLA_CONFIG.artworksArePlaceholder) ? " (example placeholder image)" : ""));
     if (direction) img.classList.add("is-swapping");
     els.title.textContent = a.title;
     els.cat.textContent = catLabel(a.category);
     els.medium.textContent = a.medium;
-    els.year.textContent = a.year;
+    els.year.textContent = a.year || "—";
+    els.size.textContent = a.dimensions || "—";
+    els.hours.textContent = a.hours ? a.hours + " hours" : "—";
+    els.size.parentNode.hidden = !a.dimensions;
+    els.hours.parentNode.hidden = !a.hours;
     els.desc.textContent = a.description;
     els.note.textContent = a.note || "";
     els.count.textContent = "No. " + String(index + 1).padStart(2, "0") + " of " + String(items.length).padStart(2, "0");
@@ -84,7 +88,7 @@
     root = document.getElementById("lightbox");
     if (!root) return;
     img = document.getElementById("lb-img");
-    ["title", "cat", "medium", "year", "desc", "note", "count", "prev", "next"].forEach(function (k) {
+    ["title", "cat", "medium", "year", "size", "hours", "desc", "note", "count", "prev", "next"].forEach(function (k) {
       els[k] = document.getElementById("lb-" + k);
     });
     els.prev.addEventListener("click", function () { go(-1); });
@@ -96,8 +100,8 @@
       if (c.hasAttribute("data-lb-commission")) {
         // pre-select a matching service in the enquiry form
         var a = items[index];
-        var map = { pencil: "individual", charcoal: "charcoal", nature: "custom", commission: "custom" };
-        if (a && window.WLA.commissions) window.WLA.commissions.select(map[a.category] || "custom", false);
+        var m = a && /\b(A[0-4])\b/.exec(a.dimensions || "");
+        if (window.WLA.commissions) window.WLA.commissions.select(m ? m[1] : "A3", false);
         close();
         return; // the anchor's href handles scrolling
       }

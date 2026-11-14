@@ -48,93 +48,63 @@ wambui-luther-art/
 │   └── commissions.js      ← rate cards + WhatsApp enquiry form
 └── assets/
     ├── images/
-    │   ├── artist/         ← portrait-placeholder.svg, about-placeholder.svg
-    │   ├── artwork/        ← 12 example placeholder sketches
-    │   ├── process/        ← stage-1 … stage-5 placeholders
-    │   └── og-image.jpg    ← social sharing image (placeholder)
-    ├── illustrations/      ← signature-placeholder.svg
+    │   ├── artist/         ← photos of Wambui and handover moments
+    │   ├── artwork/        ← the gallery pieces
+    │   ├── process/        ← stage-1 … stage-5 process photos
+    │   ├── story/          ← "Spot the Silver" slides
+    │   └── og-image.jpg    ← social sharing image
+    ├── illustrations/      ← signature.png
     └── textures/           ← paper-grain.svg
 ```
 
 ---
 
-## 3. Replacing placeholder content
+## 3. Updating the content
 
-Everything that still needs real content is labelled **"placeholder"** on the page and in the code. Search the project for `PLACEHOLDER` to find each one.
+Almost everything lives in **`js/config.js`**. Edit it, commit, and the live site updates within a minute or two.
 
-### 3.1 Contact details: `js/config.js` → `contact`
+| What | Where in `config.js` |
+|---|---|
+| WhatsApp, phone, email, Instagram, TikTok | `contact` |
+| Bio, About photo, lists | `about` |
+| *Unseen but Not Forgotten* feature | `memorial` |
+| Prices, sizes, styles, "every piece comes with" | `sizes`, `styles`, `includes`, `customQuoteNote` |
+| Gallery pieces | `artworks` (and `categories` for the filters) |
+| Process timeline photos | `process` |
+| "Spot the Silver" game slides | `story` |
+| "From the easel to the wall" photos | `moments` |
 
-```js
-whatsappNumber: "2547XXXXXXXX",  // international format, digits only, no +
-whatsappIsPlaceholder: false,    // hides the "placeholder number" warning
-email: "you@yourdomain.com",
-instagramUrl: "https://www.instagram.com/yourhandle/",
-instagramHandle: "@yourhandle",
-```
+### Adding a new artwork
 
-Every WhatsApp, email and Instagram link on the site picks up these values automatically.
-
-### 3.2 Prices and services: `js/config.js` → `services`
-
-Each service has a `name`, a `description`, a `priceFrom` value (a number in KES), `sizes`, a `turnaround`, and an optional handwritten `note`. Once the prices are confirmed, set `pricesArePlaceholder: false`. You can also edit `budgetRanges` and `pricingNote`.
-
-### 3.3 Artwork: `js/config.js` → `artworks`
-
-1. Put the photos in `assets/images/artwork/`. JPG or WebP at about 1600px on the long edge is a good size.
-2. Update each object, or add new ones:
+1. Save the photo in `assets/images/artwork/`. JPG, about 1600px on the long edge, is ideal.
+2. Add an entry to `artworks`:
 
 ```js
-{
-  id: 13,
-  title: "Grandmother's Hands",
-  category: "pencil",          // pencil | charcoal | nature | commission
-  medium: "Graphite on paper",
-  year: 2026,
-  description: "A short story about the piece.",
-  image: "assets/images/artwork/grandmothers-hands.jpg",
-  width: 1200, height: 1600,   // real pixel size (prevents layout jumps)
-  featured: true,
-  size: "tall",                // large | tall | wide | regular (gallery layout)
-  note: "One of my favourites.", // optional handwritten sticky note
-  alt: "Pencil drawing of an elderly woman's hands folded in her lap" // optional but recommended
-}
+{ id: 9, title: "New Piece", category: "portrait",      // portrait | mixed | gift
+  medium: "Graphite & charcoal on Strathmore Vellum", year: 2026,
+  dimensions: "A3", hours: 30,                          // optional
+  description: "A sentence or two in her words.",
+  image: "assets/images/artwork/new-piece.jpg", width: 1200, height: 1500,
+  featured: false, size: "regular",                     // large | tall | wide | regular
+  note: "a little handwritten note",                    // optional
+  alt: "Describe what the drawing shows" }
 ```
 
-3. Set `artworksArePlaceholder: false`. This removes "(example placeholder image)" from the alt text.
-4. Delete the old placeholder SVGs from `assets/images/artwork/`.
+### Changing prices
 
-To add a **new category**, add it to `categories` and use its `id` in your artwork. The filters and counts update themselves.
+Each size in `sizes` has `drawing` and `framed` prices for 1, 2 and 3 people, plus `frameAdds` and `colourAddOn`. The price cards, the drawing/framed toggle and the enquiry-form estimate all read from here, so you only change a price once.
 
-### 3.4 Artist portraits
+### Hero photo
 
-- **Hero portrait:** replace `assets/images/artist/portrait-placeholder.svg`, or change the `src` in `index.html` (search for `portrait-placeholder`). A portrait ratio of roughly 9:11 works best. Update the `alt` text as well.
-- **About photo:** set `about.portrait` and `about.portraitAlt` in `config.js`.
+The hero image is set directly in `index.html` (search for `wambui-at-easel.jpg`).
 
-### 3.5 Biography and About: `config.js` → `about`
+### Signature
 
-Replace the biography paragraphs, interests, materials, philosophy, inspiration and favourite subjects with the artist's own words. Then remove the "Placeholder biography" flag in `index.html` (search for `placeholder-flag`).
+`assets/illustrations/signature.png` was extracted from a small image, so it's a little soft. For a crisper one, photograph her signature in black pen on white paper and replace the file. Keep a transparent background.
 
-### 3.6 Signature
+### Social sharing image
 
-Scan the real signature as a transparent PNG or SVG, save it into `assets/illustrations/`, and point `brand.signatureImage` at it.
-
-### 3.7 Process images: `config.js` → `process`
-
-Five stages, each with an image, title, text and handwritten note. Photos of a real drawing at each stage work beautifully here.
-
-### 3.8 Testimonials: `config.js` → `testimonials`
-
-**Only publish real words, with the client's permission.** When you add real testimonials, also remove the "Placeholder" badges: delete `quote__flag` in `main.js` and the `placeholder-flag` line in `index.html`.
-
-### 3.9 Social sharing image and URL
-
-Replace `assets/images/og-image.jpg` with a 1200×630 image. Before publishing, change the `og:image` / `twitter:image` meta tags to **absolute** URLs and uncomment `og:url` in `index.html`.
-
-### 3.10 Removing the "placeholder" flags
-
-Once everything is real, delete the `<p class="placeholder-flag">…</p>` lines in `index.html`.
-
----
+`assets/images/og-image.jpg` (1200 × 630) is what shows when the link is shared on WhatsApp, Instagram and so on.
 
 ## 4. How the WhatsApp enquiry works
 

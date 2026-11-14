@@ -26,6 +26,8 @@
     var links = {
       whatsapp: "https://wa.me/" + String(cfg.contact.whatsappNumber).replace(/\D/g, "") + "?text=" + encodeURIComponent(greet),
       instagram: cfg.contact.instagramUrl,
+      tiktok: cfg.contact.tiktokUrl,
+      phone: "tel:+" + String(cfg.contact.whatsappNumber).replace(/\D/g, ""),
       email: "mailto:" + cfg.contact.email + "?subject=" + encodeURIComponent("Commission enquiry — " + cfg.brand.name)
     };
     $$("[data-link]").forEach(function (el) { if (links[el.dataset.link]) el.href = links[el.dataset.link]; });
@@ -45,24 +47,36 @@
     $("#about-philosophy").textContent = a.philosophy;
     $("#about-inspiration").textContent = a.inspiration;
     var ap = $("#about-portrait"); ap.src = a.portrait; ap.alt = a.portraitAlt;
+    if (a.portraitCaption) $("#about-caption").textContent = a.portraitCaption;
+
+    var m = cfg.memorial;
+    if (m) {
+      $("#memorial-ref").src = m.reference; $("#memorial-fin").src = m.finished;
+      $("#memorial-ref-cap").textContent = m.referenceCaption;
+      $("#memorial-fin-cap").textContent = m.finishedCaption;
+      $("#memorial-year").textContent = m.year;
+      $("#memorial-title").textContent = m.title;
+      $("#memorial-why").textContent = m.why;
+      $("#memorial-quote").textContent = m.quote;
+      $("#memorial-details").textContent = m.details;
+    }
 
     $("#timeline-list").innerHTML = cfg.process.map(function (s, i) {
       return '<li class="stage" style="--stagger:' + (i * 0.12) + 's">' +
         '<span class="stage__num" aria-hidden="true">' + (i + 1) + '<svg viewBox="0 0 120 110"><path d="M66 9 C98 8 117 32 112 60 C107 90 76 106 48 101 C19 96 3 70 9 44 C15 18 42 3 74 11" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></span>' +
         '<div class="stage__card">' +
-          '<img src="' + esc(s.image) + '" alt="Placeholder image for process stage ' + (i + 1) + ': ' + esc(s.title) + '" width="800" height="600" loading="lazy" decoding="async">' +
+          '<img src="' + esc(s.image) + '" alt="' + esc(s.alt || s.title) + '" width="800" height="600" loading="lazy" decoding="async">' +
           '<h3 class="stage__title"><span class="sr-only">Stage ' + (i + 1) + ': </span>' + esc(s.title) + "</h3>" +
           '<p class="stage__text">' + esc(s.text) + "</p>" +
           '<p class="stage__note" aria-hidden="true">' + esc(s.note) + "</p>" +
         "</div></li>";
     }).join("");
 
-    $("#quotes").innerHTML = cfg.testimonials.map(function (t, i) {
-      return '<figure class="quote" style="--stagger:' + (i * 0.12) + 's">' +
-        '<span class="quote__flag">Placeholder</span>' +
-        '<svg class="quote__mark" aria-hidden="true"><use href="#i-quote"/></svg>' +
-        "<blockquote><p>" + esc(t.quote) + "</p></blockquote>" +
-        "<footer><cite>" + esc(t.name) + "</cite><span>" + esc(t.detail) + "</span></footer></figure>";
+    $("#moments-grid").innerHTML = (cfg.moments || []).map(function (t, i) {
+      return '<figure class="moment reveal" style="--stagger:' + (i * 0.1) + 's">' +
+        '<span class="tape tape--top" aria-hidden="true"></span>' +
+        '<img src="' + esc(t.image) + '" alt="' + esc(t.alt) + '" loading="lazy" decoding="async">' +
+        '<figcaption class="hand">' + esc(t.caption) + "</figcaption></figure>";
     }).join("");
   }
 
@@ -399,6 +413,83 @@
     });
   }
 
+  /* ---------- 11. "Spot the Silver" story game ---------- */
+  function initStory() {
+    var st = cfg.story, stage = $("#story-stage");
+    if (!st || !stage) return;
+    var img = $("#story-img"), hot = $("#story-hotspot"), miss = $("#story-miss"), found = $("#story-found"), ping = $("#story-ping");
+    var bars = $("#story-bars"), count = $("#story-count"), fb = $("#story-feedback"), how = $("#story-how");
+    var prev = $("#story-prev"), next = $("#story-next"), reveal = $("#story-reveal"), restart = $("#story-restart");
+    var idx = 0, solved = false, misses = 0, touchX = null, swiped = false;
+    var hints = ["Not quite. Keep looking.", "Look past the glasses and the cap...", "Getting warmer? Try lower down.", "Hint: check his wrist."];
+
+    var h = st.hotspot;
+    [hot, found].forEach(function (el) {
+      el.style.left = h.left + "%"; el.style.top = h.top + "%"; el.style.width = h.width + "%"; el.style.height = h.height + "%";
+    });
+    bars.innerHTML = st.slides.map(function () { return "<span><i></i></span>"; }).join("");
+    st.slides.forEach(function (src) { var p = new Image(); p.src = src; });
+
+    function render() {
+      img.src = st.slides[idx];
+      img.alt = st.alts[idx] || "";
+      var guessing = idx === 0 && !solved;
+      hot.hidden = !guessing; miss.hidden = !guessing;
+      found.classList.toggle("is-on", idx === 0 && solved);
+      stage.classList.toggle("is-guessing", guessing);
+      $$("span", bars).forEach(function (b, i) { b.classList.toggle("is-done", i < idx); b.classList.toggle("is-now", i === idx); });
+      count.textContent = (idx + 1) + " / " + st.slides.length;
+      prev.disabled = idx === 0;
+      next.disabled = idx === st.slides.length - 1;
+      how.hidden = !guessing;
+      reveal.hidden = solved;
+      restart.hidden = !(solved && idx === st.slides.length - 1);
+      img.classList.remove("is-swap"); void img.offsetWidth; img.classList.add("is-swap");
+    }
+    function go(step) {
+      var n = idx + step;
+      if (n < 0 || n >= st.slides.length) return;
+      if (!solved && n > 0) { solved = true; fb.textContent = "Here's the answer..."; }
+      idx = n; render();
+    }
+    function win(byGuess) {
+      solved = true;
+      fb.textContent = byGuess ? "You found it! The watch face is real silver leaf." : "It's the watch. The face is real silver leaf.";
+      render();
+      found.classList.remove("is-on"); void found.getBoundingClientRect(); found.classList.add("is-on");
+      setTimeout(function () { if (idx === 0) { idx = st.answerSlide || 1; render(); } }, reduce ? 300 : 1700);
+    }
+
+    hot.addEventListener("click", function (e) { e.stopPropagation(); win(true); });
+    miss.addEventListener("click", function (e) {
+      if (swiped) return;
+      var r = stage.getBoundingClientRect();
+      ping.style.left = (e.clientX - r.left) + "px"; ping.style.top = (e.clientY - r.top) + "px";
+      ping.classList.remove("is-on"); void ping.offsetWidth; ping.classList.add("is-on");
+      fb.textContent = hints[Math.min(misses, hints.length - 1)];
+      misses++;
+      if (misses >= hints.length) stage.classList.add("is-hinting");
+    });
+    reveal.addEventListener("click", function () { idx = 0; win(false); });
+    restart.addEventListener("click", function () {
+      idx = 0; solved = false; misses = 0; fb.textContent = ""; stage.classList.remove("is-hinting"); render();
+    });
+    prev.addEventListener("click", function () { go(-1); });
+    next.addEventListener("click", function () { go(1); });
+    $("#story-viewer").addEventListener("keydown", function (e) {
+      if (e.key === "ArrowRight") { e.preventDefault(); go(1); }
+      if (e.key === "ArrowLeft") { e.preventDefault(); go(-1); }
+    });
+    stage.addEventListener("touchstart", function (e) { touchX = e.touches[0].clientX; swiped = false; }, { passive: true });
+    stage.addEventListener("touchend", function (e) {
+      if (touchX === null) return;
+      var dx = e.changedTouches[0].clientX - touchX;
+      if (Math.abs(dx) > 50) { swiped = true; go(dx < 0 ? 1 : -1); setTimeout(function () { swiped = false; }, 350); }
+      touchX = null;
+    });
+    render();
+  }
+
   /* ---------- Boot ---------- */
   document.addEventListener("DOMContentLoaded", function () {
     if (!cfg) { console.error("WLA_CONFIG missing — check js/config.js"); return; }
@@ -406,6 +497,7 @@
     renderContent();
     initLoader();
     initNav();
+    initStory();
     initReveals();
     initScrollFx();
     initCursor();

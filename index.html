@@ -55,6 +55,8 @@
       <symbol id="i-close" viewBox="0 0 24 24"><path d="M5 5.5c4 3.6 9 9 14 13.4 M18.6 5c-3.8 4.2-8.6 9.4-13.4 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
       <symbol id="i-prev" viewBox="0 0 24 24"><path d="M15 4.5c-2.6 2.6-5 5-7.4 7.6 2.4 2.4 4.8 5 7.4 7.4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
       <symbol id="i-next" viewBox="0 0 24 24"><path d="M9 4.5c2.6 2.6 5 5 7.4 7.6-2.4 2.4-4.8 5-7.4 7.4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-tiktok" viewBox="0 0 24 24"><path d="M14 3.5v11a3.6 3.6 0 1 1-3.1-3.56 M14 3.5c.5 2.6 2.4 4.4 5.2 4.7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+      <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6.5 3.5h3l1.5 4-2 1.3a10 10 0 0 0 6.2 6.2l1.3-2 4 1.5v3a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4.5 5.7a2 2 0 0 1 2-2.2Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></symbol>
       <symbol id="i-quote" viewBox="0 0 80 64"><path d="M30 6C14 12 6 24 6 38c0 10 6 18 15 18 8 0 13-6 13-13s-5-12-12-12c-2 0-3 0-4 1 2-9 8-15 16-20Z M70 6C54 12 46 24 46 38c0 10 6 18 15 18 8 0 13-6 13-13s-5-12-12-12c-2 0-3 0-4 1 2-9 8-15 16-20Z" fill="currentColor"/></symbol>
     </defs>
   </svg>
@@ -169,19 +171,19 @@
           </p>
 
           <p class="hero__intro reveal-load" style="--i:4">
-            Welcome to my little corner of the art world. I create traditional pencil and charcoal drawings, turning faces, moments and ideas into meaningful pieces of art.
+            I'm a self-taught portrait artist working in graphite, charcoal and mixed media. My work centres on personal portraiture: capturing not just likeness, but the emotion, memory and story behind each subject.
           </p>
 
           <ul class="hero__specs reveal-load" style="--i:5" aria-label="Specialisations">
-            <li>Pencil Portraits</li>
-            <li>Charcoal Art</li>
-            <li>Original Drawings</li>
+            <li>Graphite Portraits</li>
+            <li>Charcoal</li>
+            <li>Gold &amp; Silver Leaf</li>
             <li>Custom Commissions</li>
           </ul>
 
           <div class="hero__ctas reveal-load" style="--i:6">
             <a href="#artwork" class="btn btn--dark">Explore Artwork</a>
-            <a href="#commissions" class="btn btn--line">Commission an Artwork</a>
+            <a href="#commissions" class="btn btn--line">Commission a Portrait</a>
           </div>
         </div>
 
@@ -189,18 +191,17 @@
           <figure class="hero__frame reveal-load" style="--i:3">
             <span class="tape tape--tl" aria-hidden="true"></span>
             <span class="tape tape--br" aria-hidden="true"></span>
-            <!-- REPLACE: artist portrait. Keep a portrait ratio around 9:11 -->
-            <img src="assets/images/artist/portrait-placeholder.svg" alt="Placeholder for a portrait photo of the artist, Wambui Luther" width="900" height="1100" fetchpriority="high">
+            <img src="assets/images/artist/wambui-at-easel.jpg" alt="Wambui Luther smiling at her easel while drawing a large family portrait" width="759" height="846" fetchpriority="high">
             <svg class="hero__frame-sketch" viewBox="0 0 400 480" preserveAspectRatio="none" aria-hidden="true">
               <path class="draw draw--hero" style="--d:2.2s; --delay:.6s" d="M14 22 C120 8 280 16 388 12 C394 140 384 330 392 466 C270 474 120 470 10 472 C16 330 6 160 18 18"/>
             </svg>
           </figure>
 
           <p class="hand hero__note hero__note--a" aria-hidden="true">
-            that's me!<br><small>(placeholder photo)</small>
+            that's me!<br><small>(126 hours in)</small>
             <svg class="hero__note-arrow"><use href="#i-arrow"/></svg>
           </p>
-          <p class="hand hero__note hero__note--b" aria-hidden="true">2B · 4B · 8B<br>+ charcoal</p>
+          <p class="hand hero__note hero__note--b" aria-hidden="true">graphite · charcoal<br>+ a little silver</p>
 
           <!-- curved graphite line from the portrait to a realistic pencil; the pencil "drew" it -->
           <svg class="hero__desk" viewBox="0 0 600 300" aria-hidden="true">
@@ -239,7 +240,6 @@
             <svg class="underline-sketch" viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true"><path class="draw" d="M4 14 C80 4 160 18 296 8"/></svg>
           </h2>
           <p class="section-sub">A collection of drawings, studies and moments captured on paper.</p>
-          <p class="placeholder-flag">Example placeholder images — real artwork coming soon</p>
         </header>
 
         <div class="filters reveal" role="toolbar" aria-label="Filter artwork by category" id="gallery-filters"></div>
@@ -251,21 +251,55 @@
       </div>
     </section>
 
+    <!-- ========== SPOT THE SILVER ========== -->
+    <section class="section story" id="silver" aria-labelledby="story-title">
+      <div class="container story__inner">
+        <div class="story__text reveal">
+          <p class="hand section-head__kicker">a little game</p>
+          <h2 class="section-title" id="story-title">Spot the <em>Silver.</em></h2>
+          <p class="story__lead">There's one thing in this portrait that isn't charcoal. Can you find it?</p>
+          <p class="story__how" id="story-how">Tap the part of the drawing you think is different.</p>
+          <p class="story__feedback hand" id="story-feedback" aria-live="polite"></p>
+          <div class="story__controls">
+            <button type="button" class="btn btn--line btn--sm" id="story-reveal">Show me</button>
+            <button type="button" class="btn btn--line btn--sm" id="story-restart" hidden>Play again</button>
+          </div>
+          <p class="story__meta"><span>The Silver Watch</span> · graphite, charcoal &amp; silver leaf · 37 hours · 2026</p>
+        </div>
+
+        <div class="story__viewer reveal" id="story-viewer">
+          <div class="story__bars" id="story-bars" aria-hidden="true"></div>
+          <div class="story__stage" id="story-stage">
+            <img id="story-img" src="assets/images/story/slide-1.jpg" alt="" width="864" height="1080" loading="lazy" decoding="async">
+            <button type="button" class="story__hotspot" id="story-hotspot" aria-label="Guess: the watch"></button>
+            <button type="button" class="story__miss" id="story-miss" aria-label="Guess somewhere else in the drawing" tabindex="-1"></button>
+            <svg class="story__found" id="story-found" viewBox="0 0 120 110" aria-hidden="true"><path d="M66 9 C98 8 117 32 112 60 C107 90 76 106 48 101 C19 96 3 70 9 44 C15 18 42 3 74 11"/></svg>
+            <span class="story__ping" id="story-ping" aria-hidden="true"></span>
+          </div>
+          <div class="story__nav">
+            <button type="button" class="lightbox__btn story__btn" id="story-prev" aria-label="Previous slide"><svg width="24" height="24"><use href="#i-prev"/></svg></button>
+            <p class="story__count hand" id="story-count" aria-live="polite"></p>
+            <button type="button" class="lightbox__btn story__btn" id="story-next" aria-label="Next slide"><svg width="24" height="24"><use href="#i-next"/></svg></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ========== ABOUT ========== -->
     <section class="section about paper-beige textured" id="about" aria-labelledby="about-title">
       <div class="container about__inner">
         <figure class="about__photo reveal" data-parallax="-0.04">
           <span class="tape tape--top" aria-hidden="true"></span>
-          <img id="about-portrait" src="assets/images/artist/about-placeholder.svg" alt="Placeholder for a photo of Wambui Luther in her studio" width="800" height="1000" loading="lazy">
-          <figcaption class="hand">in the studio — placeholder photo</figcaption>
+          <img id="about-portrait" src="assets/images/artist/wambui-with-family-portrait.jpg" alt="Wambui Luther standing beside her finished family portrait" width="492" height="875" loading="lazy">
+          <figcaption class="hand" id="about-caption">with the family portrait, 2026</figcaption>
         </figure>
 
         <article class="about__note reveal">
-          <p class="hand section-head__kicker">p.3 — a little note from me</p>
+          <p class="hand section-head__kicker">p.3 — my art story</p>
           <h2 class="section-title" id="about-title">Behind the <em>Pencil</em>
             <svg class="underline-sketch" viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true"><path class="draw" d="M4 10 C90 16 190 4 296 12"/></svg>
           </h2>
-          <p class="placeholder-flag">Placeholder biography — replace in js/config.js</p>
+          <p class="about__name"><span data-bind="brand.fullName">Laurene Wambui Luther</span> · <span data-bind="brand.descriptor"></span></p>
           <div class="about__bio" id="about-bio"></div>
 
           <div class="about__lists">
@@ -278,19 +312,41 @@
               <ul id="about-materials"></ul>
             </div>
             <div>
-              <h3 class="hand">Artistic interests</h3>
+              <h3 class="hand">What my portraits hold</h3>
               <ul id="about-interests"></ul>
             </div>
           </div>
 
           <blockquote class="about__philosophy">
             <p id="about-philosophy"></p>
-            <footer class="hand">— my creative philosophy</footer>
+            <footer class="hand">— what I draw for</footer>
           </blockquote>
-          <p class="about__inspiration"><strong class="hand">Inspired by:</strong> <span id="about-inspiration"></span></p>
+          <p class="about__inspiration"><strong class="hand">Where it began:</strong> <span id="about-inspiration"></span></p>
 
-          <img class="about__signature" data-bind-src="brand.signatureImage" src="assets/illustrations/signature-placeholder.svg" alt="Artist signature (placeholder)" width="260" height="90" loading="lazy">
+          <img class="about__signature" data-bind-src="brand.signatureImage" src="assets/illustrations/signature.png" alt="Wambui Luther's signature" width="560" height="142" loading="lazy">
         </article>
+      </div>
+
+      <!-- In memory: Unseen but Not Forgotten -->
+      <div class="container memorial" aria-labelledby="memorial-title">
+        <div class="memorial__pair reveal">
+          <figure class="memorial__photo memorial__photo--ref">
+            <img id="memorial-ref" src="assets/images/artwork/unseen-reference.jpg" alt="Reference photograph of Martin Njoroge Luther smiling" width="1080" height="1350" loading="lazy">
+            <figcaption class="hand" id="memorial-ref-cap"></figcaption>
+          </figure>
+          <svg class="memorial__arrow" viewBox="0 0 120 60" aria-hidden="true"><path class="draw" d="M4 40 C30 10 70 4 108 26 M96 12 L110 27 L92 34"/></svg>
+          <figure class="memorial__photo memorial__photo--fin">
+            <img id="memorial-fin" src="assets/images/artwork/unseen-but-not-forgotten-2021.jpg" alt="The finished graphite portrait of Martin Njoroge Luther, titled Unseen but not forgotten" width="1080" height="1350" loading="lazy">
+            <figcaption class="hand" id="memorial-fin-cap"></figcaption>
+          </figure>
+        </div>
+        <div class="memorial__text reveal">
+          <p class="hand section-head__kicker">in memory · <span id="memorial-year"></span></p>
+          <h3 class="memorial__title" id="memorial-title"></h3>
+          <p class="memorial__why" id="memorial-why"></p>
+          <blockquote class="memorial__quote"><p id="memorial-quote"></p></blockquote>
+          <p class="memorial__details" id="memorial-details"></p>
+        </div>
       </div>
     </section>
 
@@ -324,12 +380,42 @@
             <svg class="underline-sketch" viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true"><path class="draw" d="M4 12 C70 6 200 16 296 6"/></svg>
           </h2>
           <p class="section-sub">Have an idea in mind? Let's turn it into something you can hold onto.</p>
-          <p class="placeholder-flag" id="price-flag">Placeholder prices — not confirmed rates</p>
         </header>
 
-        <div class="rate-cards" id="rate-cards"></div>
+        <!-- Find your size: drawn to scale -->
+        <div class="sizes reveal" id="sizes">
+          <div class="sizes__scale">
+            <svg id="size-scale" viewBox="0 0 132 128" role="img" aria-label="Paper sizes A4 to A0 drawn to scale, nested inside one another"></svg>
+            <p class="hand sizes__hint">drawn to scale ↑</p>
+          </div>
+          <div class="sizes__list">
+            <h3 class="sizes__title">Find your <em>size</em></h3>
+            <ul id="size-list" class="sizes__items"></ul>
+            <p class="sizes__unit">Sizes in cm</p>
+          </div>
+        </div>
 
-        <p class="pricing-note reveal"><span class="hand">note:</span> <span id="pricing-note"></span></p>
+        <!-- Price cards -->
+        <div class="price-head reveal">
+          <h3 class="sizes__title">Portrait <em>prices</em></h3>
+          <div class="finish-toggle" role="group" aria-label="Show prices for">
+            <button type="button" class="finish-toggle__btn is-active" data-finish="drawing" aria-pressed="true">Drawing</button>
+            <button type="button" class="finish-toggle__btn" data-finish="framed" aria-pressed="false">Framed</button>
+          </div>
+        </div>
+        <div class="price-cards" id="price-cards"></div>
+        <p class="custom-quote reveal"><span class="hand">bigger group?</span> <span id="custom-quote"></span></p>
+
+        <!-- Styles -->
+        <h3 class="sizes__title reveal">Choose your <em>style</em></h3>
+        <div class="styles" id="styles"></div>
+        <p class="addons reveal" id="addons"></p>
+
+        <!-- Included -->
+        <div class="includes reveal">
+          <h3 class="hand includes__title">Every piece comes with</h3>
+          <ul id="includes"></ul>
+        </div>
       </div>
 
       <!-- Enquiry -->
@@ -339,7 +425,7 @@
             <h3 class="section-title section-title--sm">Start your <em>commission</em></h3>
             <p>Fill in a few details and I'll prepare a WhatsApp message for you to send. Nothing is sent automatically — you stay in control.</p>
             <ol class="enquire__steps hand">
-              <li>Choose a drawing &amp; size</li>
+              <li>Choose a size &amp; style</li>
               <li>Add your details</li>
               <li>Review your message</li>
               <li>Send it on WhatsApp</li>
@@ -357,31 +443,26 @@
               <input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="e.g. +254 7XX XXX XXX" required aria-describedby="e-phone">
               <p class="field__error" id="e-phone"></p>
             </div>
-            <div class="field">
-              <label for="f-category">Artwork type <span aria-hidden="true">*</span></label>
-              <select id="f-category" name="category" required aria-describedby="e-category"></select>
-              <p class="field__error" id="e-category"></p>
-            </div>
             <fieldset class="field field--sizes">
-              <legend>Preferred size <span aria-hidden="true">*</span></legend>
+              <legend>Size <span aria-hidden="true">*</span></legend>
               <div class="size-picker" id="size-picker"></div>
               <p class="field__error" id="e-size"></p>
             </fieldset>
-            <div class="field field--half">
-              <label for="f-subjects">Number of subjects</label>
-              <div class="stepper">
-                <button type="button" class="stepper__btn" data-step="-1" aria-label="Fewer subjects">−</button>
-                <input id="f-subjects" name="subjects" type="number" min="1" max="12" value="1">
-                <button type="button" class="stepper__btn" data-step="1" aria-label="More subjects">+</button>
-              </div>
-            </div>
-            <div class="field field--half">
-              <label for="f-budget">Budget range</label>
-              <select id="f-budget" name="budget"></select>
-            </div>
+            <fieldset class="field">
+              <legend>Number of people</legend>
+              <div class="chip-picker" id="people-picker"></div>
+            </fieldset>
+            <fieldset class="field field--half">
+              <legend>Finish</legend>
+              <div class="chip-picker" id="finish-picker"></div>
+            </fieldset>
+            <fieldset class="field field--half">
+              <legend>Style</legend>
+              <div class="chip-picker" id="style-picker"></div>
+            </fieldset>
             <div class="field">
               <label for="f-notes">Additional instructions</label>
-              <textarea id="f-notes" name="notes" rows="4" placeholder="Occasion, deadline, background, anything I should know…"></textarea>
+              <textarea id="f-notes" name="notes" rows="4" placeholder="Who's in the portrait, the occasion, your deadline, delivery location…"></textarea>
             </div>
             <div class="field">
               <span class="field__label" id="f-ref-label">Reference photo <small>(optional)</small></span>
@@ -404,9 +485,10 @@
             <div class="review__paper">
               <span class="tape tape--top" aria-hidden="true"></span>
               <h3 class="hand review__title" id="review-title">Your message preview</h3>
-              <div class="review__bubble" id="review-message" aria-live="polite"></div>
+              <div class="review__estimate" id="review-estimate" aria-live="polite"></div>
+              <div class="review__bubble" id="review-message"></div>
               <p class="review__attach" id="review-attach" hidden>📎 Remember to attach your reference photo in WhatsApp.</p>
-              <p class="review__warn" id="review-warn" hidden>Heads up: this prototype uses a placeholder WhatsApp number, so the message won't reach the artist yet.</p>
+              <p class="review__warn" id="review-warn" hidden>Heads up: the WhatsApp number on this site is a placeholder, so the message won't reach the artist yet.</p>
               <button type="submit" form="enquiry-form" class="btn btn--wa">
                 <svg width="20" height="20" aria-hidden="true"><use href="#i-whatsapp"/></svg>
                 Send enquiry via WhatsApp
@@ -427,14 +509,15 @@
       </div>
     </section>
 
-    <!-- ========== TESTIMONIALS ========== -->
-    <section class="section testimonials paper-ivory" id="testimonials" aria-labelledby="testimonials-title">
+    <!-- ========== MOMENTS: from the easel to the wall ========== -->
+    <section class="section moments paper-ivory" id="moments" aria-labelledby="moments-title">
       <div class="container">
         <header class="section-head section-head--center reveal">
-          <h2 class="section-title" id="testimonials-title">Kind <em>Words.</em></h2>
-          <p class="placeholder-flag">Placeholder testimonials — not real client reviews</p>
+          <p class="hand section-head__kicker">where the stories live</p>
+          <h2 class="section-title" id="moments-title">From the easel <em>to the wall.</em></h2>
+          <p class="section-sub">The best part is handing it over.</p>
         </header>
-        <div class="quotes" id="quotes"></div>
+        <div class="moments__grid" id="moments-grid"></div>
       </div>
     </section>
 
@@ -447,11 +530,12 @@
           <p class="contact__lead">Every drawing begins with an idea. I'd love to help bring yours to life.</p>
           <div class="contact__links">
             <a class="btn btn--wa" data-link="whatsapp" href="#" target="_blank" rel="noopener"><svg width="20" height="20" aria-hidden="true"><use href="#i-whatsapp"/></svg> Chat on WhatsApp</a>
-            <a class="contact-link" data-link="instagram" href="#" target="_blank" rel="noopener"><svg width="20" height="20" aria-hidden="true"><use href="#i-instagram"/></svg> <span data-bind="contact.instagramHandle">@yourhandle</span></a>
-            <a class="contact-link" data-link="email" href="#"><svg width="20" height="20" aria-hidden="true"><use href="#i-mail"/></svg> <span data-bind="contact.email">hello@example.com</span></a>
+            <a class="contact-link" data-link="instagram" href="#" target="_blank" rel="noopener"><svg width="20" height="20" aria-hidden="true"><use href="#i-instagram"/></svg> <span>Instagram <span data-bind="contact.instagramHandle"></span></span></a>
+            <a class="contact-link" data-link="tiktok" href="#" target="_blank" rel="noopener"><svg width="20" height="20" aria-hidden="true"><use href="#i-tiktok"/></svg> <span>TikTok <span data-bind="contact.tiktokHandle"></span></span></a>
+            <a class="contact-link" data-link="email" href="#"><svg width="20" height="20" aria-hidden="true"><use href="#i-mail"/></svg> <span data-bind="contact.email"></span></a>
+            <a class="contact-link" data-link="phone" href="#"><svg width="20" height="20" aria-hidden="true"><use href="#i-phone"/></svg> <span data-bind="contact.phoneDisplay"></span></a>
           </div>
-          <p class="placeholder-flag">Placeholder contact details — edit in js/config.js</p>
-          <img class="contact__signature" data-bind-src="brand.signatureImage" src="assets/illustrations/signature-placeholder.svg" alt="Artist signature (placeholder)" width="520" height="180" loading="lazy">
+          <img class="contact__signature" data-bind-src="brand.signatureImage" src="assets/illustrations/signature.png" alt="Wambui Luther's signature" width="560" height="142" loading="lazy">
         </div>
 
         <div class="doodle reveal">
@@ -500,6 +584,7 @@
       <div class="footer__social">
         <a data-link="whatsapp" href="#" target="_blank" rel="noopener" aria-label="WhatsApp"><svg width="22" height="22"><use href="#i-whatsapp"/></svg></a>
         <a data-link="instagram" href="#" target="_blank" rel="noopener" aria-label="Instagram"><svg width="22" height="22"><use href="#i-instagram"/></svg></a>
+        <a data-link="tiktok" href="#" target="_blank" rel="noopener" aria-label="TikTok"><svg width="22" height="22"><use href="#i-tiktok"/></svg></a>
         <a data-link="email" href="#" aria-label="Email"><svg width="22" height="22"><use href="#i-mail"/></svg></a>
       </div>
     </div>
@@ -530,11 +615,13 @@
           <dl class="lightbox__meta">
             <div><dt>Category</dt><dd id="lb-cat"></dd></div>
             <div><dt>Medium</dt><dd id="lb-medium"></dd></div>
+            <div><dt>Size</dt><dd id="lb-size"></dd></div>
+            <div><dt>Time</dt><dd id="lb-hours"></dd></div>
             <div><dt>Year</dt><dd id="lb-year"></dd></div>
           </dl>
           <p class="lightbox__desc" id="lb-desc"></p>
           <p class="lightbox__note hand" id="lb-note"></p>
-          <a href="#enquire" class="btn btn--line btn--sm" data-lb-close data-lb-commission>Commission something similar</a>
+          <a href="#enquire" class="btn btn--line btn--sm" data-lb-close data-lb-commission>Commission a portrait like this</a>
           <p class="lightbox__keys">← → to browse · Esc to close</p>
         </figcaption>
       </figure>

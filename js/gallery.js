@@ -61,7 +61,8 @@
     var frag = document.createDocumentFragment();
     cfg.artworks.forEach(function (a, i) {
       var isPh = a.placeholder != null ? a.placeholder : !!cfg.artworksArePlaceholder;
-      var alt = a.alt || (a.title + " — " + a.medium + ", " + a.year + (isPh ? " (example placeholder image)" : ""));
+      var alt = a.alt || (a.title + " — " + a.medium + (a.year ? ", " + a.year : "") + (isPh ? " (example placeholder image)" : ""));
+      var extra = [a.dimensions, a.hours ? a.hours + " hours" : ""].filter(Boolean).join(" · ");
       var item = el("article", "art art--" + (a.size || "regular"));
       item.dataset.category = a.category;
       item.dataset.index = i;
@@ -79,8 +80,8 @@
           "</button>" +
           '<div class="art__caption"><div>' +
             '<h3 class="art__title">' + esc(a.title) + "</h3>" +
-            '<p class="art__meta">' + esc(catLabel(a.category)) + " · " + esc(a.medium) + "</p>" +
-          '</div><span class="art__year">' + esc(a.year) + "</span></div>" +
+            '<p class="art__meta">' + esc(catLabel(a.category)) + (extra ? " · " + esc(extra) : "") + "</p>" +
+          '</div>' + (a.year ? '<span class="art__year">' + esc(a.year) + "</span>" : "") + "</div>" +
           '<p class="art__desc">' + esc(a.description) + "</p>" +
         "</div>";
       item.querySelector("img").addEventListener("load", scheduleLayout);
