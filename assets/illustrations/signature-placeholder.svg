@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 180" width="520" height="180" role="img" aria-label="Signature placeholder - replace with the artist's real signature">
+  <!-- PLACEHOLDER: replace this file with a transparent PNG/SVG scan of the artist's real signature. -->
+  <g fill="none" stroke="#292725" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M30 70 C40 120 52 140 62 100 C70 70 78 70 84 108 C90 140 104 120 112 60"/>
+    <path d="M128 98 C116 92 112 120 128 118 C140 116 142 96 136 92 C140 112 146 122 156 104 C164 90 168 96 170 112 C174 96 182 92 188 110 C190 120 196 116 204 98"/>
+    <path d="M220 40 C214 80 214 110 222 120 C232 128 244 100 238 92 C230 86 224 110 240 116 C254 120 262 102 268 94"/>
+    <path d="M58 150 C160 136 300 132 470 128"/>
+  </g>
+  <text x="300" y="80" font-family="Georgia, serif" font-style="italic" font-size="22" fill="#77736D">signature placeholder</text>
+</svg>
