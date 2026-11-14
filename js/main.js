@@ -242,27 +242,6 @@
     });
   }
 
-  /* ---------- 8. Desktop pencil cursor ---------- */
-  function initCursor() {
-    if (!finePointer || reduce) return;
-    var cur = $(".pencil-cursor");
-    var x = -100, y = -100, raf = null;
-    document.documentElement.classList.add("has-pencil-cursor");
-    function paint() { raf = null; cur.style.transform = "translate3d(" + x + "px," + y + "px,0)"; }
-    document.addEventListener("pointermove", function (e) {
-      if (e.pointerType !== "mouse") return;
-      x = e.clientX; y = e.clientY;
-      if (!raf) raf = requestAnimationFrame(paint);
-      var t = e.target;
-      cur.classList.toggle("is-text", !!t.closest("input:not([type=radio]):not([type=file]), textarea, select"));
-      cur.classList.toggle("is-hover", !!t.closest("a, button, .art__button, .size-opt, .dropzone"));
-    }, { passive: true });
-    document.addEventListener("pointerdown", function () { cur.classList.add("is-down"); });
-    document.addEventListener("pointerup", function () { cur.classList.remove("is-down"); });
-    document.addEventListener("mouseleave", function () { cur.style.opacity = 0; });
-    document.addEventListener("mouseenter", function () { cur.style.opacity = ""; });
-  }
-
   /* ---------- 9. Hero: faint graphite trail that follows the pointer ---------- */
   function initHeroSketch() {
     if (!finePointer || reduce) return;
@@ -500,7 +479,6 @@
     initStory();
     initReveals();
     initScrollFx();
-    initCursor();
     initHeroSketch();
     initDoodle();
   });

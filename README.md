@@ -126,7 +126,7 @@ Some limits to know about:
 - A loader that draws itself, then a hero entrance with SVG pencil strokes drawing in real time
 - A realistic SVG pencil that slides in at the end of the graphite line it "drew"
 - A faint graphite trail that follows the mouse over the hero (desktop only)
-- A custom pencil cursor (desktop with a mouse only; never on touch or reduced motion)
+- A pencil cursor drawn by the browser (desktop mouse only), so clicks land exactly at the tip; links and buttons show the normal pointing hand
 - A sticky nav with a hand-drawn underline that slides to the active section
 - A mobile menu designed as a sketchbook contents page
 - A masonry gallery with category filters (FLIP animation), a hover zoom and title reveal, and a hand-drawn circle around the active filter
@@ -141,7 +141,7 @@ Some limits to know about:
 
 - Semantic landmarks, a skip link, labelled form fields, `aria-live` status messages and `aria-pressed` filter buttons
 - Visible dashed focus outlines and full keyboard support (the filters use arrow keys)
-- `prefers-reduced-motion` turns off animations, parallax, the cursor and the trail, so all content shows immediately
+- `prefers-reduced-motion` turns off animations, parallax and the trail, so all content shows immediately
 - Lazy-loaded gallery images with explicit dimensions, and no libraries at all. The whole site is about 150 KB of uncompressed code.
 
 ---

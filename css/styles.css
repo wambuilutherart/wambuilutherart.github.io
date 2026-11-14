@@ -425,7 +425,7 @@ section[id] { scroll-margin-top: calc(var(--nav-h) - 1px); }
 .art.is-hidden { display: none; }
 
 .art__button {
-  display: block; width: 100%; padding: 0; border: 0; background: none; text-align: left; cursor: zoom-in;
+  display: block; width: 100%; padding: 0; border: 0; background: none; text-align: left; cursor: pointer;
 }
 .art__media {
   position: relative; overflow: hidden; background: #fbf9f4;
@@ -840,19 +840,15 @@ body.lb-open { overflow: hidden; }
 .to-top__icon { width: 22px; height: 22px; transition: transform .3s var(--ease); }
 .to-top__icon path { fill: none; stroke: var(--graphite); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 
-/* ---------- Pencil cursor (desktop only; enabled by JS) ---------- */
-.pencil-cursor {
-  position: fixed; left: 0; top: 0; z-index: 9999; pointer-events: none;
-  width: 40px; height: 40px; margin: -31px 0 0 -9px; /* graphite tip sits on the pointer */
-  opacity: 0; transition: opacity .3s, scale .25s var(--ease);
+/* ---------- Pencil cursor (desktop mouse only) ----------
+   Drawn by the browser itself, so it never lags or disappears and the
+   click lands exactly at the graphite tip (hotspot 3px 29px). */
+@media (hover: hover) and (pointer: fine) {
+  html { cursor: url("../assets/illustrations/pencil-cursor.png") 3 29, auto; }
+  a, button, label, select, summary, [role="button"], .art__button, .size-row, #size-scale .sheet rect { cursor: pointer; }
+  input[type="text"], input[type="tel"], input[type="number"], textarea { cursor: text; }
+  #doodle-canvas, .story__stage.is-guessing, .story__miss, .story__hotspot { cursor: url("../assets/illustrations/pencil-cursor.png") 3 29, crosshair; }
 }
-.has-pencil-cursor .pencil-cursor { opacity: 1; }
-.has-pencil-cursor, .has-pencil-cursor a, .has-pencil-cursor button, .has-pencil-cursor .art__button, .has-pencil-cursor label { cursor: none; }
-.has-pencil-cursor input, .has-pencil-cursor textarea, .has-pencil-cursor select { cursor: auto; }
-.has-pencil-cursor #doodle-canvas { cursor: none; }
-.pencil-cursor.is-hover { scale: 1.3; }
-.pencil-cursor.is-text { opacity: 0 !important; }
-.pencil-cursor.is-down { scale: .9; }
 
 /* =====================================================================
    Real-content components (v2)
@@ -889,9 +885,9 @@ body.lb-open { overflow: hidden; }
 .story__stage img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
 .story__stage img.is-swap { animation: story-in .5s var(--ease) both; }
 @keyframes story-in { from { opacity: .3; transform: scale(1.02); } to { opacity: 1; transform: none; } }
-.story__stage.is-guessing { cursor: crosshair; }
-.story__miss { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; padding: 0; border: 0; background: transparent; cursor: crosshair; }
-.story__hotspot { position: absolute; z-index: 2; padding: 0; border: 0; border-radius: 50%; background: transparent; cursor: crosshair; }
+.story__stage.is-guessing { }
+.story__miss { position: absolute; inset: 0; z-index: 1; width: 100%; height: 100%; padding: 0; border: 0; background: transparent; }
+.story__hotspot { position: absolute; z-index: 2; padding: 0; border: 0; border-radius: 50%; background: transparent; }
 .story__hotspot:focus-visible { outline: 2px dashed var(--ink); outline-offset: 2px; }
 .story__stage.is-hinting .story__hotspot { box-shadow: 0 0 0 2px rgba(239,233,221,.8); animation: hint-pulse 1.4s ease-in-out infinite; }
 @keyframes hint-pulse { 0%, 100% { box-shadow: 0 0 0 2px rgba(239,233,221,.2); } 50% { box-shadow: 0 0 0 10px rgba(239,233,221,0), 0 0 0 2px rgba(239,233,221,.9); } }
