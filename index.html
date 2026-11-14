@@ -233,6 +233,10 @@
         <p class="sr-only" aria-live="polite" id="gallery-status"></p>
 
         <div class="gallery" id="gallery"></div>
+        <div class="gallery-swipe" aria-hidden="true">
+          <span class="gallery-swipe__track"><i id="gallery-progress"></i></span>
+          <span class="hand gallery-swipe__hint">swipe for more →</span>
+        </div>
 
         <noscript><p class="section-sub">Please enable JavaScript to browse the gallery.</p></noscript>
       </div>
@@ -286,6 +290,16 @@
           <h2 class="section-title" id="about-title">Behind the <em>Pencil</em>
             <svg class="underline-sketch" viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true"><path class="draw" d="M4 10 C90 16 190 4 296 12"/></svg>
           </h2>
+          <button type="button" class="story-toggle" id="about-toggle" aria-expanded="false" aria-controls="about-more memorial-more">
+            <span class="story-toggle__label">Read my art story</span>
+            <span class="story-toggle__icon" aria-hidden="true">
+              <svg class="story-toggle__ring" viewBox="0 0 120 110"><path d="M66 9 C98 8 117 32 112 60 C107 90 76 106 48 101 C19 96 3 70 9 44 C15 18 42 3 74 11"/></svg>
+              <svg class="story-toggle__arrow" viewBox="0 0 24 24"><path d="M12 5 C11.6 10 12.4 14 12 19 M6.5 13.5 L12 19.5 L17.5 13.5"/></svg>
+            </span>
+          </button>
+
+          <div class="collapsible" id="about-more">
+            <div class="collapsible__inner">
           <p class="about__name"><span data-bind="brand.fullName">Laurene Wambui Luther</span> · <span data-bind="brand.descriptor"></span></p>
           <div class="about__bio" id="about-bio"></div>
 
@@ -311,10 +325,14 @@
           <p class="about__inspiration"><strong class="hand">Where it began:</strong> <span id="about-inspiration"></span></p>
 
           <img class="about__signature" data-bind-src="brand.signatureImage" src="assets/illustrations/signature.png" alt="Wambui Luther's signature" width="560" height="142" loading="lazy">
+            </div>
+          </div>
         </article>
       </div>
 
-      <!-- In memory: Unseen but Not Forgotten -->
+      <!-- In memory: Unseen but Not Forgotten (opens with the art story) -->
+      <div class="collapsible" id="memorial-more">
+        <div class="collapsible__inner">
       <div class="container memorial" aria-labelledby="memorial-title">
         <div class="memorial__pair reveal">
           <figure class="memorial__photo memorial__photo--ref">
@@ -333,6 +351,8 @@
           <p class="memorial__why" id="memorial-why"></p>
           <blockquote class="memorial__quote"><p id="memorial-quote"></p></blockquote>
           <p class="memorial__details" id="memorial-details"></p>
+        </div>
+      </div>
         </div>
       </div>
     </section>

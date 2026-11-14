@@ -165,6 +165,8 @@
       } else {
         nodes.forEach(function (n) { if (!n.classList.contains("is-hidden")) n.classList.add("is-visible"); });
       }
+      if (grid.scrollLeft) grid.scrollTo({ left: 0, behavior: reduce.matches ? "auto" : "smooth" });
+      updateProgress();
       var count = visibleArtworks().length;
       statusEl.textContent = "Showing " + count + " artwork" + (count === 1 ? "" : "s") + " in " + catLabel(f) + ".";
       busy = false;
@@ -179,6 +181,15 @@
     }
   }
 
+  /* ---------- Phone swipe progress line ---------- */
+  var progressEl = null;
+  function updateProgress() {
+    if (!progressEl) return;
+    var max = grid.scrollWidth - grid.clientWidth;
+    var p = max > 0 ? (grid.scrollLeft + grid.clientWidth) / grid.scrollWidth : 1;
+    progressEl.style.width = Math.max(8, p * 100).toFixed(1) + "%";
+  }
+
   function init() {
     cfg = window.WLA_CONFIG;
     grid = document.getElementById("gallery");
@@ -190,6 +201,10 @@
     renderItems();
     layout();
     window.addEventListener("resize", scheduleLayout);
+    progressEl = document.getElementById("gallery-progress");
+    grid.addEventListener("scroll", function () { requestAnimationFrame(updateProgress); }, { passive: true });
+    window.addEventListener("resize", updateProgress);
+    updateProgress();
     if (document.fonts && document.fonts.ready) document.fonts.ready.then(scheduleLayout);
 
     // staggered entrance as cards scroll into view

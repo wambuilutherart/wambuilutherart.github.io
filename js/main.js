@@ -469,6 +469,34 @@
     render();
   }
 
+  /* ---------- 12. Expandable "my art story" ---------- */
+  function initAboutToggle() {
+    var btn = $("#about-toggle");
+    if (!btn) return;
+    var regions = btn.getAttribute("aria-controls").split(" ").map(function (id) { return document.getElementById(id); }).filter(Boolean);
+    var label = $(".story-toggle__label", btn);
+    function set(open) {
+      btn.setAttribute("aria-expanded", open ? "true" : "false");
+      label.textContent = open ? "Close my story" : "Read my art story";
+      regions.forEach(function (r) {
+        r.classList.toggle("is-open", open);
+        if (open) r.removeAttribute("inert"); else r.setAttribute("inert", "");
+      });
+    }
+    set(false);
+    btn.addEventListener("click", function () {
+      var open = btn.getAttribute("aria-expanded") !== "true";
+      set(open);
+      if (!open) {
+        // keep the button in view when a long story folds away above it
+        setTimeout(function () {
+          var r = btn.getBoundingClientRect();
+          if (r.top < 0 || r.bottom > window.innerHeight) btn.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "center" });
+        }, 60);
+      }
+    });
+  }
+
   /* ---------- Boot ---------- */
   document.addEventListener("DOMContentLoaded", function () {
     if (!cfg) { console.error("WLA_CONFIG missing — check js/config.js"); return; }
@@ -477,6 +505,7 @@
     initLoader();
     initNav();
     initStory();
+    initAboutToggle();
     initReveals();
     initScrollFx();
     initHeroSketch();

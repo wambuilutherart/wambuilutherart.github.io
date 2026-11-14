@@ -1016,3 +1016,28 @@ body.lb-open { overflow: hidden; }
 .field .chip, .field .size-opt { display: inline-block; margin: 0; padding: 0; text-transform: none; letter-spacing: normal; font-weight: 400; font-size: inherit; color: var(--graphite); }
 .size-opt span small { text-transform: none; }
 .field .chip input:not(:checked) + span, .field .size-opt input:not(:checked) + span { color: var(--graphite); }
+
+/* ---------- Collapsible "my art story" ---------- */
+.collapsible { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .7s var(--ease); }
+.collapsible.is-open { grid-template-rows: 1fr; }
+.collapsible__inner { min-height: 0; overflow: hidden; }
+html:not(.js) .collapsible { grid-template-rows: 1fr; }
+html:not(.js) .story-toggle { display: none; }
+.story-toggle {
+  display: inline-flex; align-items: center; gap: 14px; margin-top: 30px; padding: 6px 4px 6px 0;
+  background: none; border: 0; color: var(--graphite); font-family: var(--f-hand); font-size: 1.6rem; font-weight: 600; line-height: 1;
+}
+.story-toggle__icon { position: relative; display: grid; place-items: center; width: 54px; height: 50px; }
+.story-toggle__ring { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.story-toggle__ring path { fill: none; stroke: var(--graphite); stroke-width: 2.4; stroke-linecap: round; stroke-dasharray: 360; stroke-dashoffset: 0; transition: stroke-dashoffset .6s var(--ease); }
+.story-toggle__arrow { width: 24px; height: 24px; transition: transform .5s var(--ease); }
+.story-toggle__arrow path { fill: none; stroke: var(--graphite); stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.story-toggle:hover .story-toggle__ring path { animation: draw-line .7s var(--ease); --len: 360; }
+.story-toggle:not([aria-expanded="true"]) .story-toggle__arrow { animation: nudge-down 2.2s ease-in-out infinite; }
+.story-toggle[aria-expanded="true"] .story-toggle__arrow { transform: rotate(180deg); }
+@keyframes nudge-down { 0%, 100% { translate: 0 0; } 50% { translate: 0 4px; } }
+.story-toggle + .collapsible .about__name { margin-top: 30px; }
+
+/* ---------- Phone gallery swipe bar (shown in responsive.css) ---------- */
+.gallery-swipe { display: none; }
+.about__inner:has(.story-toggle[aria-expanded="false"]) { align-items: center; }
