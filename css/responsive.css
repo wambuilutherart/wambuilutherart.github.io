@@ -183,34 +183,9 @@
   .story__meta { order: 5; text-align: center; }
 }
 
-/* ---------- Phones: gallery becomes a swipeable row ---------- */
+/* ---------- Phones: filter tabs wrap so all of them fit ---------- */
 @media (max-width: 640px) {
-  .filters { flex-wrap: wrap; overflow: visible; margin-inline: 0; padding: 0; gap: 4px 2px; margin-bottom: 18px; }
+  .filters { flex-wrap: wrap; overflow: visible; margin-inline: 0; padding: 0; gap: 4px 2px; margin-bottom: 26px; }
   .filter { padding: 8px 12px; font-size: .88rem; }
-
-  .gallery {
-    display: flex; align-items: flex-start; gap: 16px;
-    overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory;
-    margin-inline: calc(var(--gutter) * -1); padding: 26px var(--gutter) 8px;
-    scroll-padding-inline: var(--gutter); scrollbar-width: none;
-  }
-  .gallery::-webkit-scrollbar { display: none; }
-  .gallery .art, .gallery .art--large, .gallery .art--wide, .gallery .art--tall {
-    flex: 0 0 82%; grid-row-end: auto !important; margin: 0; scroll-snap-align: start;
-  }
-  .gallery .art.is-hidden { display: none; }
-  .art__media { padding: 8px; }
-  .art__media img { max-height: 62vh; width: 100%; object-fit: contain; background: #fbf9f4; }
-  .art__note { font-size: 1.05rem; top: -16px; white-space: nowrap; max-width: 88%; overflow: hidden; text-overflow: ellipsis; }
-  .art__caption { flex-direction: row; gap: 10px; padding-top: 12px; }
-  .art__title { font-size: 1.25rem; }
-  .art__meta { font-size: .7rem; }
-  .art__desc { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; font-size: .88rem; }
-
-  .gallery-swipe { display: flex; align-items: center; gap: 14px; margin-top: 18px; }
-  .gallery-swipe__track { position: relative; flex: 1; height: 2px; background: var(--line); border-radius: 2px; overflow: hidden; }
-  .gallery-swipe__track i { position: absolute; left: 0; top: 0; bottom: 0; width: 20%; background: var(--graphite); border-radius: 2px; transition: width .2s linear; }
-  .gallery-swipe__hint { font-size: 1.15rem; color: var(--pencil-text); white-space: nowrap; }
-
   .story-toggle { font-size: 1.45rem; }
 }

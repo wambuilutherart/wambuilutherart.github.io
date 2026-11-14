@@ -1037,7 +1037,4 @@ html:not(.js) .story-toggle { display: none; }
 .story-toggle[aria-expanded="true"] .story-toggle__arrow { transform: rotate(180deg); }
 @keyframes nudge-down { 0%, 100% { translate: 0 0; } 50% { translate: 0 4px; } }
 .story-toggle + .collapsible .about__name { margin-top: 30px; }
-
-/* ---------- Phone gallery swipe bar (shown in responsive.css) ---------- */
-.gallery-swipe { display: none; }
 .about__inner:has(.story-toggle[aria-expanded="false"]) { align-items: center; }
