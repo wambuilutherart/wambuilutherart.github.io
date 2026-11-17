@@ -412,7 +412,8 @@
       var src = st.slides[idx];
       if (isVideo(src)) {
         img.hidden = true; vid.hidden = false;
-        if (vid.getAttribute("src") !== src) vid.src = src;
+        if (vid.getAttribute("src") !== src) { vid.poster = src.replace(/\.(mp4|webm|mov)$/i, "-poster.jpg"); vid.src = src; }
+        vid.controls = reduce; // reduced motion: no autoplay, let people press play
         vid.setAttribute("aria-label", st.alts[idx] || "");
         if (!reduce) { var pr = vid.play(); if (pr && pr.catch) pr.catch(function () {}); }
       } else {

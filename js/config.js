@@ -182,21 +182,22 @@ window.WLA_CONFIG = {
 
   /* ---------- "Spot the Silver" story (slides in order) ----------
      A slide can be an image (.jpg/.png/.webp) or a short video (.mp4/.webm).
-     Videos play muted and loop, like an Instagram story.
+     Videos play muted and loop, like an Instagram story. Put a still frame next to
+     each video named like slide-5-poster.jpg; it shows while the video loads.
      hotspot: the area (in % of the first slide) that counts as a correct tap */
   story: {
     slides: [
       "assets/images/story/slide-1.jpg", "assets/images/story/slide-2.jpg", "assets/images/story/slide-3.jpg", "assets/images/story/slide-4.jpg",
-      "assets/images/story/slide-5.jpg", "assets/images/story/slide-6.jpg", "assets/images/story/slide-7.jpg", "assets/images/story/slide-8.jpg"
+      "assets/images/story/slide-5.mp4", "assets/images/story/slide-6.mp4", "assets/images/story/slide-7.mp4", "assets/images/story/slide-8.jpg"
     ],
     alts: [
       "Charcoal portrait with the question: there's one thing in this portrait that isn't charcoal. Can you spot it?",
       "Close-up of the face. Not the glasses, not the cap.",
       "Close-up of the shirt collar. Keep looking.",
       "Close-up of the wristwatch. It's the watch, and there's no time on it.",
-      "Silver leaf being pressed onto the watch face. I gave it silver instead.",
-      "The silver watch face glowing under light. It looks different at every hour.",
-      "The framed portrait on a wooden table. It moves when you do.",
+      "Video: silver leaf being pressed onto the watch face with a brush. I gave it silver instead.",
+      "Video: light moving across the silver watch face as it changes. It looks different at every hour.",
+      "Video: moving closer to the framed portrait as the silver watch shifts and flickers. It moves when you do.",
       "Pencils, charcoal and the first sketch. 37 hours went into this piece."
     ],
     hotspot: { left: 15, top: 71, width: 16, height: 13 },
