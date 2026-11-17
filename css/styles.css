@@ -1079,19 +1079,14 @@ html:not(.js) .story-toggle { display: none; }
   position: absolute; left: 10px; right: 10px; bottom: 10px; top: 10px;
   display: flex; flex-direction: column; justify-content: flex-end; gap: 4px;
   padding: 22px 20px 18px; color: #fff;
-  background: linear-gradient(to top, rgba(28,26,24,.86) 0%, rgba(28,26,24,.55) 28%, rgba(28,26,24,0) 58%);
+  background: linear-gradient(to top, rgba(28,26,24,.8) 0%, rgba(28,26,24,.45) 22%, rgba(28,26,24,0) 45%);
   opacity: 0; transition: opacity .4s var(--ease);
 }
 .art__hover > * { translate: 0 10px; transition: translate .45s var(--ease); }
 .art__hover-title { font-family: var(--f-serif); font-size: 1.45rem; font-weight: 500; line-height: 1.1; text-wrap: balance; }
 .art__hover-meta { font-size: .76rem; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.82); }
-.art__hover-cta {
-  display: inline-flex; align-items: center; gap: 8px; align-self: flex-start; margin-top: 10px;
-  padding: 7px 14px; border-radius: 30px; background: #fff; color: var(--graphite); font-size: .8rem; font-weight: 600; letter-spacing: .02em;
-}
 .art__button:hover .art__hover, .art__button:focus-visible .art__hover { opacity: 1; }
 .art__button:hover .art__hover > *, .art__button:focus-visible .art__hover > * { translate: 0 0; }
-.art__button:hover .art__hover-cta, .art__button:focus-visible .art__hover-cta { transition-delay: .05s; }
 .art__tap { display: none; }
 
 /* prompt above the grid */

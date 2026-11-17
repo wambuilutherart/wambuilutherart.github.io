@@ -78,7 +78,6 @@
               '<span class="art__hover" aria-hidden="true">' +
                 '<span class="art__hover-title">' + esc(a.title) + "</span>" +
                 ([a.dimensions, a.year].filter(Boolean).length ? '<span class="art__hover-meta">' + [a.dimensions, a.year].filter(Boolean).map(esc).join(" · ") + "</span>" : "") +
-                '<span class="art__hover-cta">View more ' + EXPAND + "</span>" +
               "</span>" +
               '<span class="art__tap" aria-hidden="true">' + EXPAND + "</span>" +
             "</div>" +
