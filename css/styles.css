@@ -1038,3 +1038,77 @@ html:not(.js) .story-toggle { display: none; }
 @keyframes nudge-down { 0%, 100% { translate: 0 0; } 50% { translate: 0 4px; } }
 .story-toggle + .collapsible .about__name { margin-top: 30px; }
 .about__inner:has(.story-toggle[aria-expanded="false"]) { align-items: center; }
+
+/* =====================================================================
+   v3 — plain paper surfaces, cleaner gallery, currencies
+   ===================================================================== */
+
+/* ---------- Paper surfaces (no squares, no dots) ---------- */
+.paper-vellum {
+  background-color: #F3EFE6;
+  background-image: url("../assets/textures/vellum.svg");
+  background-size: 480px 480px;
+}
+.paper-vellum--warm { background-color: #ECE6DA; }
+.paper-smooth {
+  background-color: #F7F4EE;
+  background-image: url("../assets/textures/smooth.svg");
+  background-size: 300px 300px;
+}
+.paper-white { background: #FFFFFF; }
+/* cards that sat on cream now sit on white: give them a touch more definition */
+.paper-white .rate, .paper-white .style-card, .paper-white .moment { box-shadow: 0 1px 2px rgba(41,39,37,.07), 0 14px 34px -14px rgba(41,39,37,.28); }
+.paper-white .includes { background: #F8F5EF; }
+.paper-white .finish-toggle { background: #fff; }
+.paper-white .art__media { background: #fff; }
+#doodle-canvas { background-image: url("../assets/textures/smooth.svg"); background-size: 300px 300px; background-color: #FDFBF6; }
+
+/* ---------- Drawn signature mark (same as the loading screen) ---------- */
+.sign-mark { display: inline-flex; flex-direction: column; align-items: center; }
+.sign-mark__sketch { width: 200px; height: 75px; overflow: visible; }
+.sign-mark__sketch path { fill: none; stroke: var(--graphite); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.sign-mark__word { margin: 2px 0 0; font-family: var(--f-serif); font-size: 1.6rem; line-height: 1; white-space: nowrap; }
+.sign-mark__word small { font-family: var(--f-sans); font-size: .55rem; letter-spacing: .4em; color: var(--brown); vertical-align: middle; margin-left: 4px; }
+.sign-mark--about { display: flex; width: fit-content; margin: 30px 0 0 auto; }
+.sign-mark--contact { margin-top: 40px; }
+
+/* ---------- Gallery: images only, details on click ---------- */
+.art { margin-bottom: clamp(18px, 2.4vw, 32px); }
+.art__view {
+  position: absolute; right: 18px; bottom: 18px; display: grid; place-items: center;
+  width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,.92); color: var(--graphite);
+  box-shadow: 0 4px 12px -4px rgba(0,0,0,.3);
+  opacity: 0; transform: scale(.8); transition: opacity .35s var(--ease), transform .35s var(--ease);
+}
+.art__button:hover .art__view, .art__button:focus-visible .art__view { opacity: 1; transform: none; }
+.art__button:hover img, .art__button:focus-visible img { transform: scale(1.03); }
+
+/* ---------- Currency picker ---------- */
+.price-head { align-items: center; }
+.price-head .sizes__title { margin-right: auto; }
+.currency-pick { display: inline-flex; align-items: center; gap: 10px; }
+.currency-pick__label { font-size: .72rem; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--pencil-text); }
+.currency-pick select {
+  min-height: 44px; padding: 6px 34px 6px 14px; border: 1.5px solid var(--graphite); border-radius: 40px; background-color: #fff;
+  appearance: none; -webkit-appearance: none; font-size: .9rem; cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 9c2 2 4 4 6 6 2-2 4-4 6-6' fill='none' stroke='%23292725' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 12px center; background-size: 16px;
+}
+.currency-note { margin: -10px 0 22px; font-size: .84rem; color: var(--pencil-text); }
+.review__approx { font-size: 1rem; color: var(--charcoal); font-variant-numeric: tabular-nums; }
+
+/* ---------- Colour pencil add-on: a clear grid ---------- */
+.addons { display: flex; flex-wrap: wrap; align-items: center; gap: 18px 32px; margin: 28px 0 0; padding: 20px 24px; background: #F8F5EF; border: 1.3px dashed rgba(41,39,37,.25); border-radius: 4px; }
+.addons__title { display: flex; flex-direction: column; }
+.addons__title .hand { margin: 0; font-size: 1.5rem; color: var(--brown); line-height: 1.1; }
+.addons__title small { font-size: .78rem; color: var(--pencil-text); }
+.addons__grid { flex: 1; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+.addons__cell { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 12px 6px; background: #fff; border: 1px solid var(--line); border-radius: 3px; }
+.addons__size { font-family: var(--f-serif); font-size: 1.5rem; font-weight: 600; line-height: 1; }
+.addons__amt { font-size: .85rem; color: var(--charcoal); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* ---------- Contact: location ---------- */
+.contact__place { display: flex; align-items: center; gap: 8px; margin: -12px 0 26px; font-size: .95rem; color: var(--charcoal); }
+
+/* ---------- Story slides can be videos ---------- */
+.story__stage video { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; background: #222; }

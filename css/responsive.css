@@ -189,3 +189,15 @@
   .filter { padding: 8px 12px; font-size: .88rem; }
   .story-toggle { font-size: 1.45rem; }
 }
+
+/* ---------- v3 ---------- */
+@media (max-width: 640px) {
+  .art { margin-bottom: 14px; }
+  .art__view { display: none; }
+  .price-head { gap: 12px; }
+  .price-head .sizes__title { width: 100%; }
+  .addons { padding: 18px 16px; }
+  .addons__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); width: 100%; flex: none; }
+  .sign-mark--about { margin-inline: auto; }
+  .contact__place { margin-top: -8px; }
+}

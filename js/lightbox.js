@@ -22,7 +22,7 @@
     img.alt = a.alt || (a.title + " — " + a.medium + (a.year ? ", " + a.year : "") + ((a.placeholder != null ? a.placeholder : window.WLA_CONFIG.artworksArePlaceholder) ? " (example placeholder image)" : ""));
     if (direction) img.classList.add("is-swapping");
     els.title.textContent = a.title;
-    els.cat.textContent = catLabel(a.category);
+    els.cat.textContent = (Array.isArray(a.category) ? a.category : [a.category]).map(catLabel).join(" · ");
     els.medium.textContent = a.medium;
     els.year.textContent = a.year || "—";
     els.size.textContent = a.dimensions || "—";

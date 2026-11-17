@@ -98,9 +98,17 @@ Each size in `sizes` has `drawing` and `framed` prices for 1, 2 and 3 people, pl
 
 The hero image is set directly in `index.html` (search for `wambui-at-easel.jpg`).
 
-### Signature
+### Signature mark
 
-`assets/illustrations/signature.png` was extracted from a small image, so it's a little soft. For a crisper one, photograph her signature in black pen on white paper and replace the file. Keep a transparent background.
+The "signature" in the About and Contact sections is the same hand-drawn mark as the loading screen. It's drawn in code (search `sign-mark` in `index.html`), so there's no image to replace. (`assets/illustrations/signature.png` is no longer used and can be deleted.)
+
+### Currencies
+
+Price cards can be shown in KSh, US$, £ or €. Rates are fetched live once a day from a free service (open.er-api.com). If that fails, the `exchange.fallback` rates in `config.js` are used, so update those now and then. Prices are always charged in KSh.
+
+### Story videos
+
+Any slide in `story.slides` can be a short `.mp4` or `.webm` instead of a `.jpg`. Videos play muted and on a loop.
 
 ### Social sharing image
 

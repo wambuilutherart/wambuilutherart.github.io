@@ -11,6 +11,7 @@
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
   var ROW = 12;
 
+  function cats(a) { return Array.isArray(a.category) ? a.category : [a.category]; }
   function catLabel(id) {
     var c = cfg.categories.find(function (x) { return x.id === id; });
     return c ? c.label : id;
@@ -27,7 +28,7 @@
   /* ---------- Filters ---------- */
   function renderFilters() {
     cfg.categories.forEach(function (c, i) {
-      var count = c.id === "all" ? cfg.artworks.length : cfg.artworks.filter(function (a) { return a.category === c.id; }).length;
+      var count = c.id === "all" ? cfg.artworks.length : cfg.artworks.filter(function (a) { return cats(a).indexOf(c.id) > -1; }).length;
       var b = el("button", "filter" + (c.id === current ? " is-active" : ""));
       b.type = "button";
       b.dataset.filter = c.id;
@@ -62,27 +63,20 @@
     cfg.artworks.forEach(function (a, i) {
       var isPh = a.placeholder != null ? a.placeholder : !!cfg.artworksArePlaceholder;
       var alt = a.alt || (a.title + " — " + a.medium + (a.year ? ", " + a.year : "") + (isPh ? " (example placeholder image)" : ""));
-      var extra = [a.dimensions, a.hours ? a.hours + " hours" : ""].filter(Boolean).join(" · ");
       var item = el("article", "art art--" + (a.size || "regular"));
-      item.dataset.category = a.category;
+      item.dataset.category = cats(a).join(" ");
       item.dataset.index = i;
       item.style.setProperty("--stagger", (i % 4) * 0.08 + "s");
       item.innerHTML =
         '<div class="art__inner">' +
           (a.note ? '<p class="art__note" aria-hidden="true">' + esc(a.note) + "</p>" : "") +
-          '<button type="button" class="art__button" aria-label="View ' + esc(a.title) + ' larger">' +
+          '<button type="button" class="art__button" aria-label="' + esc(a.title) + (a.year ? ", " + esc(a.year) : "") + '. View details">' +
             '<div class="art__media">' +
-              (a.featured ? '<span class="art__featured">Featured</span>' : "") +
               '<img src="' + esc(a.image) + '" alt="' + esc(alt) + '" loading="lazy" decoding="async"' +
                 (a.width ? ' width="' + a.width + '" height="' + a.height + '"' : "") + ">" +
-              '<span class="art__reveal" aria-hidden="true"><span class="art__reveal-title">' + esc(a.title) + '</span><span class="art__reveal-cta">click to look closer →</span></span>' +
+              '<span class="art__view" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>' +
             "</div>" +
           "</button>" +
-          '<div class="art__caption"><div>' +
-            '<h3 class="art__title">' + esc(a.title) + "</h3>" +
-            '<p class="art__meta">' + esc(catLabel(a.category)) + (extra ? " · " + esc(extra) : "") + "</p>" +
-          '</div>' + (a.year ? '<span class="art__year">' + esc(a.year) + "</span>" : "") + "</div>" +
-          '<p class="art__desc">' + esc(a.description) + "</p>" +
         "</div>";
       item.querySelector("img").addEventListener("load", scheduleLayout);
       frag.appendChild(item);
@@ -123,7 +117,7 @@
   }
 
   /* ---------- Filtering with FLIP transitions ---------- */
-  function matches(n, f) { return f === "all" || n.dataset.category === f; }
+  function matches(n, f) { return f === "all" || n.dataset.category.split(" ").indexOf(f) > -1; }
 
   function setFilter(f) {
     if (f === current || busy) return;

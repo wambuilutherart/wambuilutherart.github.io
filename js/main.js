@@ -20,7 +20,6 @@
   /* ---------- 1. Bind config values into the page ---------- */
   function bindConfig() {
     $$("[data-bind]").forEach(function (el) { var v = get(el.dataset.bind); if (v != null) el.textContent = v; });
-    $$("[data-bind-src]").forEach(function (el) { var v = get(el.dataset.bindSrc); if (v) el.src = v; });
 
     var greet = "Hello " + cfg.brand.name + "! I'd like to enquire about commissioning an artwork.";
     var links = {
@@ -45,7 +44,6 @@
     list("#about-materials", a.materials);
     list("#about-interests", a.interests);
     $("#about-philosophy").textContent = a.philosophy;
-    $("#about-inspiration").textContent = a.inspiration;
     var ap = $("#about-portrait"); ap.src = a.portrait; ap.alt = a.portraitAlt;
     if (a.portraitCaption) $("#about-caption").textContent = a.portraitCaption;
 
@@ -396,7 +394,7 @@
   function initStory() {
     var st = cfg.story, stage = $("#story-stage");
     if (!st || !stage) return;
-    var img = $("#story-img"), hot = $("#story-hotspot"), miss = $("#story-miss"), found = $("#story-found"), ping = $("#story-ping");
+    var img = $("#story-img"), vid = $("#story-video"), hot = $("#story-hotspot"), miss = $("#story-miss"), found = $("#story-found"), ping = $("#story-ping");
     var bars = $("#story-bars"), count = $("#story-count"), fb = $("#story-feedback"), how = $("#story-how");
     var prev = $("#story-prev"), next = $("#story-next"), reveal = $("#story-reveal"), restart = $("#story-restart");
     var idx = 0, solved = false, misses = 0, touchX = null, swiped = false;
@@ -407,11 +405,21 @@
       el.style.left = h.left + "%"; el.style.top = h.top + "%"; el.style.width = h.width + "%"; el.style.height = h.height + "%";
     });
     bars.innerHTML = st.slides.map(function () { return "<span><i></i></span>"; }).join("");
-    st.slides.forEach(function (src) { var p = new Image(); p.src = src; });
+    var isVideo = function (src) { return /\.(mp4|webm|mov)(\?|$)/i.test(src); };
+    st.slides.forEach(function (src) { if (!isVideo(src)) { var p = new Image(); p.src = src; } });
 
     function render() {
-      img.src = st.slides[idx];
-      img.alt = st.alts[idx] || "";
+      var src = st.slides[idx];
+      if (isVideo(src)) {
+        img.hidden = true; vid.hidden = false;
+        if (vid.getAttribute("src") !== src) vid.src = src;
+        vid.setAttribute("aria-label", st.alts[idx] || "");
+        if (!reduce) { var pr = vid.play(); if (pr && pr.catch) pr.catch(function () {}); }
+      } else {
+        vid.pause(); vid.hidden = true; img.hidden = false;
+        img.src = src;
+        img.alt = st.alts[idx] || "";
+      }
       var guessing = idx === 0 && !solved;
       hot.hidden = !guessing; miss.hidden = !guessing;
       found.classList.toggle("is-on", idx === 0 && solved);
@@ -433,7 +441,7 @@
     }
     function win(byGuess) {
       solved = true;
-      fb.textContent = byGuess ? "You found it! The watch face is real silver leaf." : "It's the watch. The face is real silver leaf.";
+      fb.textContent = byGuess ? "You found it! The watch face is real silver leaf." : "";
       render();
       found.classList.remove("is-on"); void found.getBoundingClientRect(); found.classList.add("is-on");
       setTimeout(function () { if (idx === 0) { idx = st.answerSlide || 1; render(); } }, reduce ? 300 : 1700);

@@ -9,6 +9,7 @@
   window.WLA = window.WLA || {};
 
   var cfg, form, f = {}, refFile = null, refUrl = null, finishView = "drawing";
+  var cur = "KES", rates = { KES: 1 }, ratesLive = false;
   var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)");
   var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
   var PEOPLE = [{ v: "1", label: "1 person" }, { v: "2", label: "2 people" }, { v: "3", label: "3 people" }, { v: "4+", label: "4 or more" }];
@@ -17,6 +18,58 @@
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
   function num(n) { return Number(n).toLocaleString("en-KE"); }
   function money(n) { return cfg.currency + " " + num(n); }
+
+  /* ---------- Currencies ---------- */
+  function curInfo(code) { return (cfg.exchange.currencies || []).find(function (c) { return c.code === code; }) || { code: code, label: code }; }
+  function conv(kes) { return cur === "KES" ? kes : Math.round(kes / rates[cur]); }
+  function inCur(kes) { return curInfo(cur).label + (cur === "KES" ? " " : "") + num(conv(kes)); }
+  function store(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+  function load(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+
+  function initCurrency() {
+    var ex = cfg.exchange || {}, sel = document.getElementById("currency-select");
+    Object.keys(ex.fallback || {}).forEach(function (k) { rates[k] = ex.fallback[k]; });
+    sel.innerHTML = (ex.currencies || []).map(function (c) {
+      return '<option value="' + c.code + '">' + esc(c.label) + " · " + esc(c.name) + "</option>";
+    }).join("");
+    var saved = load("wla-currency");
+    if (saved && (ex.currencies || []).some(function (c) { return c.code === saved; })) cur = saved;
+    sel.value = cur;
+    sel.addEventListener("change", function () { cur = sel.value; store("wla-currency", cur); refreshPrices(); update(); });
+    if (!ex.live || !window.fetch) return;
+    var cached = null;
+    try { cached = JSON.parse(load("wla-rates") || "null"); } catch (e) {}
+    if (cached && Date.now() - cached.t < 12 * 3600e3) { applyRates(cached.r); return; }
+    fetch("https://open.er-api.com/v6/latest/KES").then(function (r) { return r.json(); }).then(function (d) {
+      if (!d || d.result !== "success" || !d.rates) return;
+      var r = {};
+      (ex.currencies || []).forEach(function (c) { if (c.code !== "KES" && d.rates[c.code]) r[c.code] = 1 / d.rates[c.code]; });
+      store("wla-rates", JSON.stringify({ t: Date.now(), r: r }));
+      applyRates(r);
+    }).catch(function () { /* keep fallback rates */ });
+  }
+  function applyRates(r) {
+    Object.keys(r).forEach(function (k) { if (r[k] > 0) rates[k] = r[k]; });
+    ratesLive = true;
+    refreshPrices(); update();
+  }
+
+  // re-draw every price on the page in the chosen currency and finish
+  function refreshPrices() {
+    var info = curInfo(cur);
+    document.querySelectorAll("#price-cards .price-val").forEach(function (el) {
+      var kes = +(finishView === "framed" ? el.dataset.f : el.dataset.d);
+      if (cur === "KES") countTo(el, kes); else el.textContent = num(conv(kes));
+    });
+    document.querySelectorAll("#price-cards .cur-label").forEach(function (el) { el.textContent = info.label; });
+    document.querySelectorAll("[data-kes]").forEach(function (el) { el.textContent = (el.dataset.prefix || "") + inCur(+el.dataset.kes); });
+    var note = document.getElementById("currency-note");
+    if (cur === "KES") { note.hidden = true; }
+    else {
+      note.hidden = false;
+      note.textContent = "Approximate prices at " + (ratesLive ? "today's" : "a recent") + " exchange rate (1 " + cur + " ≈ KSh " + num(Math.round(rates[cur])) + "). Portraits are priced and paid in Kenyan shillings.";
+    }
+  }
   function size(id) { return cfg.sizes.find(function (s) { return s.id === id; }); }
   function style(id) { return cfg.styles.find(function (s) { return s.id === id; }); }
   var circlePath = '<svg viewBox="0 0 120 50" preserveAspectRatio="none" aria-hidden="true"><path d="M64 4 C100 3 117 14 115 26 C112 40 82 47 56 46 C26 45 5 37 5 24 C6 11 32 3 70 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" pathLength="100"/></svg>';
@@ -60,9 +113,9 @@
       return '<article class="rate' + (s.popular ? " rate--popular" : "") + (s.id === "A0" ? " rate--grand" : "") + '" data-service="' + s.id + '" style="--stagger:' + (i % 3) * 0.1 + 's">' +
         '<span class="rate__tag" aria-hidden="true">' + esc(s.tag) + "</span>" +
         '<div class="rate__top"><h4 class="rate__name">' + s.id + '</h4><span class="rate__cm">' + esc(s.cm) + " cm</span></div>" +
-        '<p class="rate__price"><small>From</small><strong><span>' + esc(cfg.currency) + '</span><em class="price-val" data-d="' + s.drawing[0] + '" data-f="' + s.framed[0] + '">' + num(s[finishView][0]) + "</em></strong>" + circlePath + "</p>" +
+        '<p class="rate__price"><small>From</small><strong><span class="cur-label">' + esc(cfg.currency) + '</span><em class="price-val" data-d="' + s.drawing[0] + '" data-f="' + s.framed[0] + '">' + num(s[finishView][0]) + "</em></strong>" + circlePath + "</p>" +
         '<ul class="rate__facts">' + rows + "</ul>" +
-        '<p class="rate__frame">Frame adds ' + esc(money(s.frameAdds)) + "</p>" +
+        '<p class="rate__frame">Frame adds <span data-kes="' + s.frameAdds + '">' + esc(money(s.frameAdds)) + "</span></p>" +
         '<a href="#enquire" class="btn btn--line" data-request="' + s.id + '">Request ' + s.id + " portrait</a></article>";
     }).join("");
 
@@ -78,9 +131,7 @@
         document.querySelectorAll(".finish-toggle__btn").forEach(function (x) {
           var on = x === b; x.classList.toggle("is-active", on); x.setAttribute("aria-pressed", on ? "true" : "false");
         });
-        wrap.querySelectorAll(".price-val").forEach(function (el) {
-          countTo(el, +(finishView === "framed" ? el.dataset.f : el.dataset.d));
-        });
+        refreshPrices();
       });
     });
 
@@ -121,8 +172,11 @@
         '<p class="style-card__desc">' + esc(s.desc) + "</p>" +
         '<span class="style-card__badge">' + esc(s.badge) + "</span></article>";
     }).join("");
-    document.getElementById("addons").innerHTML = '<span class="hand">colour pencil add-on:</span> ' +
-      cfg.sizes.map(function (s) { return "<span>" + s.id + " +" + num(s.colourAddOn) + "</span>"; }).join(" · ");
+    document.getElementById("addons").innerHTML =
+      '<span class="addons__title"><span class="hand">Colour pencil add-on</span><small>added to the portrait price</small></span>' +
+      '<span class="addons__grid">' + cfg.sizes.map(function (s) {
+        return '<span class="addons__cell"><span class="addons__size">' + s.id + '</span><span class="addons__amt" data-prefix="+ " data-kes="' + s.colourAddOn + '">+ ' + esc(money(s.colourAddOn)) + "</span></span>";
+      }).join("") + "</span>";
     document.getElementById("includes").innerHTML = cfg.includes.map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("");
   }
 
@@ -134,7 +188,7 @@
   }
   function renderPickers() {
     document.getElementById("size-picker").innerHTML = cfg.sizes.map(function (s) {
-      return '<label class="size-opt"><input type="radio" name="size" value="' + s.id + '"><span>' + s.id + "<small>" + esc(s.cm) + " cm</small></span></label>";
+      return '<label class="size-opt"><input type="radio" name="size" value="' + s.id + '"><span>' + s.id + "<small>" + esc(s.suits || s.cm + " cm") + "</small></span></label>";
     }).join("");
     chips("people-picker", "people", PEOPLE, "1");
     chips("finish-picker", "finish", FINISH, "drawing");
@@ -225,7 +279,7 @@
       "• People: " + (PEOPLE.find(function (p) { return p.v === people; }) || PEOPLE[0]).label,
       "• Finish: " + (finish === "framed" ? "Framed" : "Drawing only"),
       "• Style: " + (st ? st.name : "Plain"),
-      "• Estimate: " + (!est ? "—" : est.custom ? "Custom quote please" : money(est.total) + (est.add ? " (incl. colour add-on " + money(est.add) + ")" : "")),
+      "• Estimate: " + (!est ? "—" : est.custom ? "Custom quote please" : money(est.total) + (est.add ? " (incl. colour add-on " + money(est.add) + ")" : "") + (cur !== "KES" ? " ≈ " + inCur(est.total) : "")),
       "• Reference photo: " + (refFile ? "Yes, I'll attach it in this chat." : "Not yet")
     ];
     var notes = f.notes.value.trim();
@@ -241,7 +295,8 @@
     var est = estimate(), box = document.getElementById("review-estimate");
     if (!est) box.innerHTML = '<span class="hand">estimate</span><strong>Pick a size</strong>';
     else if (est.custom) box.innerHTML = '<span class="hand">estimate</span><strong>Custom quote</strong><small>Four or more people: send your photo and I\'ll quote you.</small>';
-    else box.innerHTML = '<span class="hand">estimate</span><strong>' + esc(money(est.total)) + "</strong><small>" +
+    else box.innerHTML = '<span class="hand">estimate</span><strong>' + esc(money(est.total)) + "</strong>" +
+      (cur !== "KES" ? '<span class="review__approx">≈ ' + esc(inCur(est.total)) + "</span>" : "") + "<small>" +
       esc(est.s.id + " · " + (val("finish") === "framed" ? "framed" : "drawing only") + (est.add ? " · incl. colour add-on" : "") + " · delivery extra") + "</small>";
     document.querySelectorAll(".rate").forEach(function (c) { c.classList.toggle("is-selected", c.dataset.service === val("size")); });
   }
@@ -276,6 +331,8 @@
     renderSizeGuide();
     renderPriceCards();
     renderStyles();
+    initCurrency();
+    refreshPrices();
     renderPickers();
     initDropzone();
     if (cfg.contact.whatsappIsPlaceholder) document.getElementById("review-warn").hidden = false;

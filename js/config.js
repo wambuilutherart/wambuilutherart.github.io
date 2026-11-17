@@ -14,7 +14,6 @@ window.WLA_CONFIG = {
     fullName: "Laurene Wambui Luther",
     tagline: "Drawing stories, one stroke at a time.",
     descriptor: "Self-taught Portrait Artist · Graphite, Charcoal & Mixed Media",
-    signatureImage: "assets/illustrations/signature.png"
   },
 
   /* ---------- Contact ---------- */
@@ -27,7 +26,7 @@ window.WLA_CONFIG = {
     instagramHandle: "@wambui.luther_art",
     tiktokUrl: "https://www.tiktok.com/@wambui.luther_art",
     tiktokHandle: "@wambui.luther_art",
-    location: ""                              // e.g. "Nairobi, Kenya" — leave "" to hide
+    location: "Nairobi, Kenya"               // shown in the hero, About, contact and footer
   },
 
   /* ---------- About (her own words) ---------- */
@@ -64,17 +63,30 @@ window.WLA_CONFIG = {
   /* ---------- Commission pricing (from the official rate card) ----------
      prices[n] = price for n+1 people.  All amounts in KSh.               */
   currency: "KSh",
+  /* Other currencies shown on the price cards. Rates are fetched live each day
+     (open.er-api.com, free, no key); "fallback" is used if that is unavailable.
+     Values are KSh per 1 unit of the currency. Prices are always charged in KSh. */
+  exchange: {
+    live: true,
+    currencies: [
+      { code: "KES", label: "KSh", name: "Kenyan shilling" },
+      { code: "USD", label: "US$", name: "US dollar" },
+      { code: "GBP", label: "£",   name: "British pound" },
+      { code: "EUR", label: "€",   name: "Euro" }
+    ],
+    fallback: { USD: 130, GBP: 172, EUR: 143 }   // checked November 2026
+  },
   pricesArePlaceholder: false,
   sizes: [
-    { id: "A4", cm: "21 × 30", w: 21, h: 30, tag: "sweet & simple", desc: "About the size of a notebook. A lovely gift or desk piece.",
+    { id: "A4", suits: "Desk piece or gift", cm: "21 × 30", w: 21, h: 30, tag: "desk piece", desc: "About the size of a notebook. A lovely gift or desk piece.",
       drawing: [6000, 8000, 9000],    framed: [6800, 8800, 9800],     frameAdds: 800,   colourAddOn: 1000 },
-    { id: "A3", cm: "30 × 42", w: 30, h: 42, tag: "most popular",   desc: "Perfect for a single portrait on a shelf or small wall.",
+    { id: "A3", suits: "Single portrait", cm: "30 × 42", w: 30, h: 42, tag: "most popular",   desc: "Perfect for a single portrait on a shelf or small wall.",
       drawing: [10000, 13000, 16000], framed: [11300, 14300, 17300],  frameAdds: 1300,  colourAddOn: 1500, popular: true },
-    { id: "A2", cm: "42 × 59", w: 42, h: 59, tag: "statement piece", desc: "Great for couples, a real statement in a bedroom or hallway.",
+    { id: "A2", suits: "Couples", cm: "42 × 59", w: 42, h: 59, tag: "statement piece", desc: "Great for couples, a real statement in a bedroom or hallway.",
       drawing: [18000, 20000, 22000], framed: [20500, 22500, 24500],  frameAdds: 2500,  colourAddOn: 2000 },
-    { id: "A1", cm: "59 × 84", w: 59, h: 84, tag: "premium",        desc: "Made for family portraits above the sofa.",
+    { id: "A1", suits: "Family portraits", cm: "59 × 84", w: 59, h: 84, tag: "premium",        desc: "Made for family portraits above the sofa.",
       drawing: [25000, 27500, 30000], framed: [29800, 32300, 34800],  frameAdds: 4800,  colourAddOn: 3000 },
-    { id: "A0", cm: "84 × 119", w: 84, h: 119, tag: "the grand piece", desc: "A showstopper feature wall, where every detail comes alive.",
+    { id: "A0", suits: "Feature wall", cm: "84 × 119", w: 84, h: 119, tag: "the grand piece", desc: "A showstopper feature wall, where every detail comes alive.",
       drawing: [35000, 38000, 42000], framed: [45000, 48000, 52000],  frameAdds: 10000, colourAddOn: 4000 }
   ],
   styles: [
@@ -99,6 +111,7 @@ window.WLA_CONFIG = {
   ],
 
   /* ---------- Artwork collection ----------
+       category: one id, or a list for pieces that belong to several, e.g. ["portrait", "mixed"]
        size:  "large" | "tall" | "wide" | "regular"  (gallery layout only)
        paper / hours / dimensions: optional details shown in the viewer
        year: leave null if unknown                                       */
@@ -110,10 +123,10 @@ window.WLA_CONFIG = {
       image: "assets/images/artwork/silver-watch-portrait-2026.jpg", width: 1080, height: 1350, featured: true, size: "large", note: "my latest piece",
       alt: "Charcoal portrait of a smiling man in a cap and glasses, arms crossed, wearing a watch with a silver-leaf face" },
 
-    { id: 2, title: "Family Portrait", category: "portrait", medium: "Graphite & charcoal on Strathmore Vellum", year: 2026,
+    { id: 2, title: "Family Portrait", category: ["portrait", "mixed"], medium: "Graphite & charcoal with gold & silver leaf on Strathmore Vellum", year: 2026,
       dimensions: "A0 (79 × 93 cm)", hours: 126,
       description: "126 hours later, I understand what it means to trust the process. Maybe you don't have to have it all figured out. Maybe you just have to keep showing up. And maybe, that's how we become.",
-      image: "assets/images/artwork/family-portrait-2026.jpg", width: 1080, height: 767, featured: true, size: "wide", note: "126 hours of patience",
+      image: "assets/images/artwork/family-portrait-2026.jpg", width: 1080, height: 767, featured: true, size: "wide", note: "",
       alt: "Large graphite and charcoal portrait of three smiling family members side by side" },
 
     { id: 3, title: "Unseen but Not Forgotten", category: "portrait", medium: "Graphite & charcoal on Strathmore Bristol 400", year: 2021,
@@ -128,7 +141,7 @@ window.WLA_CONFIG = {
       image: "assets/images/artwork/ilaria-portrait-2025.jpg", width: 518, height: 646, featured: false, size: "regular", note: "",
       alt: "Portrait of a smiling young woman in a floral dress leaning on a table, graphite with touches of pink colour" },
 
-    { id: 5, title: "Jadd's 22nd Birthday", category: "gift", medium: "Graphite & charcoal on Strathmore Vellum", year: 2024,
+    { id: 5, title: "Jada's 22nd Birthday", category: "gift", medium: "Graphite & charcoal on Strathmore Vellum", year: 2024,
       dimensions: "A3", hours: 25,
       description: "Creating this piece felt like giving away a part of myself. Every moment spent was a part of my soul invested. I'm more than pleased to share these 25 hours of my life with a special friend.",
       image: "assets/images/artwork/birthday-portrait-2024.jpg", width: 1258, height: 1600, featured: false, size: "regular", note: "",
@@ -137,7 +150,7 @@ window.WLA_CONFIG = {
     { id: 6, title: "In His Memory", category: "gift", medium: "Graphite & charcoal on Strathmore Vellum", year: null,
       dimensions: "A2", hours: 40,
       description: "Dedicated to my dad's memory, this piece is a priceless gift for a dear friend, holding so many meanings and memories. It became my light in the midst of grief and in tough times.",
-      image: "assets/images/artwork/in-his-memory-gift.jpg", width: 723, height: 542, featured: false, size: "wide", note: "40 hours of light",
+      image: "assets/images/artwork/in-his-memory-gift.jpg", width: 723, height: 542, featured: false, size: "wide", note: "",
       alt: "Graphite portrait of two smiling men side by side in matching polo shirts" },
 
     { id: 7, title: "How Far Friendships Grow", category: "gift", medium: "Graphite & charcoal on Strathmore Vellum", year: 2024,
@@ -149,7 +162,7 @@ window.WLA_CONFIG = {
     { id: 8, title: "Lost Track of Time", category: "mixed", medium: "Graphite, charcoal & colour pencil on Strathmore Bristol 300", year: null,
       dimensions: "A3 (11 × 14 in)",
       description: "This piece is a beautiful reminder of how subjective art can be. I lost track of time while creating it, but it was truly healing.",
-      image: "assets/images/artwork/red-flower-portrait.jpg", width: 1294, height: 1600, featured: false, size: "regular", note: "truly healing",
+      image: "assets/images/artwork/red-flower-portrait.jpg", width: 1294, height: 1600, featured: false, size: "regular", note: "",
       alt: "Graphite portrait of a young woman looking down, with a red flower in her hair drawn in colour pencil" }
   ],
 
@@ -168,6 +181,8 @@ window.WLA_CONFIG = {
   ],
 
   /* ---------- "Spot the Silver" story (slides in order) ----------
+     A slide can be an image (.jpg/.png/.webp) or a short video (.mp4/.webm).
+     Videos play muted and loop, like an Instagram story.
      hotspot: the area (in % of the first slide) that counts as a correct tap */
   story: {
     slides: [
