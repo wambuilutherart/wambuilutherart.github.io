@@ -26,6 +26,7 @@
       whatsapp: "https://wa.me/" + String(cfg.contact.whatsappNumber).replace(/\D/g, "") + "?text=" + encodeURIComponent(greet),
       instagram: cfg.contact.instagramUrl,
       tiktok: cfg.contact.tiktokUrl,
+      ratecard: "https://wa.me/" + String(cfg.contact.whatsappNumber).replace(/\D/g, "") + "?text=" + encodeURIComponent(cfg.rateCardRequestMessage || greet),
       phone: "tel:+" + String(cfg.contact.whatsappNumber).replace(/\D/g, ""),
       email: "mailto:" + cfg.contact.email + "?subject=" + encodeURIComponent("Commission enquiry — " + cfg.brand.name)
     };

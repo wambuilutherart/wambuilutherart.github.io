@@ -119,14 +119,29 @@
   .review__paper { transform: none; }
 
   .lightbox { padding: 0; }
-  .lightbox__sheet { max-height: 100dvh; height: 100dvh; padding: 64px 18px 90px; }
+  .lightbox__sheet { display: block; width: 100%; height: 100vh; height: 100dvh; max-height: none; padding: 0; overflow: hidden; }
   .lightbox__sheet::before { display: none; }
-  .lightbox__figure { grid-template-columns: 1fr; align-content: start; }
-  .lightbox__frame img { max-height: 56dvh; }
-  .lightbox__nav { top: auto; bottom: 18px; transform: none; }
+  /* soft fade behind the bottom arrows so text never runs underneath them */
+  .lightbox__sheet::after {
+    content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 104px; z-index: 1; pointer-events: none;
+    background: linear-gradient(to top, var(--ivory) 55%, rgba(245,242,234,0));
+  }
+  .lightbox__figure {
+    display: block; height: 100%; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch;
+    padding: 76px 22px 120px;
+  }
+  .lightbox__frame { display: flex; justify-content: center; margin: 0 0 22px; }
+  .lightbox__frame img { width: auto; max-width: 100%; max-height: 52vh; max-height: 52dvh; padding: 6px; }
+  .lightbox__info { position: relative; }
+  .lightbox__count { margin-bottom: 2px; }
+  .lightbox__title { margin: 0 0 14px; font-size: 1.9rem; }
+  .lightbox__meta { margin-bottom: 14px; }
+  .lightbox__meta dt { width: 76px; }
+  .lightbox__close { top: 14px; right: 14px; z-index: 2; }
+  .lightbox__nav { top: auto; bottom: 22px; z-index: 2; transform: none; }
   .lightbox__nav:hover { transform: scale(1.06); }
-  .lightbox__nav--prev { left: calc(50% - 60px); }
-  .lightbox__nav--next { right: calc(50% - 60px); }
+  .lightbox__nav--prev { left: calc(50% - 64px); }
+  .lightbox__nav--next { right: calc(50% - 64px); }
   .lightbox__keys { display: none; }
 
   .contact__pencil { width: 240px; right: 4%; bottom: 36px; }
@@ -196,7 +211,6 @@
   .gallery-cta { margin: -6px 0 22px; }
   .gallery-cta .hand { font-size: 1.25rem; }
   .gallery-cta__arrow { width: 36px; height: 30px; }
-  .art__tap { right: 12px; bottom: 12px; width: 30px; height: 30px; }
   .price-head { gap: 12px; }
   .price-head .sizes__title { width: 100%; }
   .addons { padding: 18px 16px; }

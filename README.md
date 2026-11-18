@@ -90,6 +90,14 @@ Almost everything lives in **`js/config.js`**. Edit it, commit, and the live sit
   alt: "Describe what the drawing shows" }
 ```
 
+### The rate card (sent on request)
+
+Prices aren't shown on the main site. Visitors tap **Request my rate card**, which opens WhatsApp with a ready-made request. The full rate card lives at:
+
+**https://wambuilutherart.github.io/rates.html**
+
+That page isn't linked from the site and is hidden from Google, so only people you send the link to will see it. Its "Request A3 portrait" buttons lead back to the enquiry form with that size already picked. To show price estimates on the main site again, set `showPricesOnSite: true` in `config.js`.
+
 ### Changing prices
 
 Each size in `sizes` has `drawing` and `framed` prices for 1, 2 and 3 people, plus `frameAdds` and `colourAddOn`. The price cards, the drawing/framed toggle and the enquiry-form estimate all read from here, so you only change a price once.

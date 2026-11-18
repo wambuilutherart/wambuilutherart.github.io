@@ -16,6 +16,8 @@
   function render(direction) {
     var a = items[index];
     if (!a) return;
+    var fig = root.querySelector(".lightbox__figure"); if (fig) fig.scrollTop = 0;
+    var sheet = root.querySelector(".lightbox__sheet"); if (sheet) sheet.scrollTop = 0;
     img.classList.remove("is-swapping");
     void img.offsetWidth; // restart the "smudge-in" animation
     img.src = a.image;

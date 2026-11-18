@@ -116,7 +116,7 @@
         '<p class="rate__price"><small>From</small><strong><span class="cur-label">' + esc(cfg.currency) + '</span><em class="price-val" data-d="' + s.drawing[0] + '" data-f="' + s.framed[0] + '">' + num(s[finishView][0]) + "</em></strong>" + circlePath + "</p>" +
         '<ul class="rate__facts">' + rows + "</ul>" +
         '<p class="rate__frame">Frame adds <span data-kes="' + s.frameAdds + '">' + esc(money(s.frameAdds)) + "</span></p>" +
-        '<a href="#enquire" class="btn btn--line" data-request="' + s.id + '">Request ' + s.id + " portrait</a></article>";
+        '<a href="' + (form ? "#enquire" : "./?size=" + s.id + "#enquire") + '" class="btn btn--line" data-request="' + s.id + '">Request ' + s.id + " portrait</a></article>";
     }).join("");
 
     wrap.addEventListener("click", function (e) {
@@ -164,7 +164,13 @@
   }
 
   /* ---------- Styles, add-ons, inclusions ---------- */
+  function renderIncludes() {
+    var inc = document.getElementById("includes");
+    if (inc) inc.innerHTML = cfg.includes.map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("");
+  }
   function renderStyles() {
+    renderIncludes();
+    if (!document.getElementById("styles")) return;
     document.getElementById("styles").innerHTML = cfg.styles.map(function (s, i) {
       return '<article class="style-card style-card--' + s.id + ' reveal" style="--stagger:' + i * 0.1 + 's">' +
         '<span class="style-card__swatch" aria-hidden="true"></span>' +
@@ -177,7 +183,6 @@
       '<span class="addons__grid">' + cfg.sizes.map(function (s) {
         return '<span class="addons__cell"><span class="addons__size">' + s.id + '</span><span class="addons__amt" data-prefix="+ " data-kes="' + s.colourAddOn + '">+ ' + esc(money(s.colourAddOn)) + "</span></span>";
       }).join("") + "</span>";
-    document.getElementById("includes").innerHTML = cfg.includes.map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("");
   }
 
   /* ---------- Form pickers ---------- */
@@ -211,6 +216,7 @@
   // Public: pre-select a size (from cards, size guide or lightbox)
   function select(id, scroll) {
     if (!size(id)) return;
+    if (!form) { location.href = "./?size=" + encodeURIComponent(id) + "#enquire"; return; }
     setVal("size", id);
     document.querySelectorAll(".rate").forEach(function (c) { c.classList.toggle("is-selected", c.dataset.service === id); });
     clearError("size");
@@ -279,9 +285,11 @@
       "• People: " + (PEOPLE.find(function (p) { return p.v === people; }) || PEOPLE[0]).label,
       "• Finish: " + (finish === "framed" ? "Framed" : "Drawing only"),
       "• Style: " + (st ? st.name : "Plain"),
+      cfg.showPricesOnSite === false ? null :
       "• Estimate: " + (!est ? "—" : est.custom ? "Custom quote please" : money(est.total) + (est.add ? " (incl. colour add-on " + money(est.add) + ")" : "") + (cur !== "KES" ? " ≈ " + inCur(est.total) : "")),
       "• Reference photo: " + (refFile ? "Yes, I'll attach it in this chat." : "Not yet")
     ];
+    lines = lines.filter(function (l) { return l !== null; });
     var notes = f.notes.value.trim();
     if (notes) lines.push("", "*Details*", notes);
     lines.push("", "Thank you!", "— Sent from the " + cfg.brand.name + " website");
@@ -290,9 +298,11 @@
   function waUrl(msg) { return "https://wa.me/" + String(cfg.contact.whatsappNumber).replace(/\D/g, "") + "?text=" + encodeURIComponent(msg); }
 
   function update() {
+    if (!form) return;
     document.getElementById("review-message").innerHTML = esc(buildMessage()).replace(/\*(.+?)\*/g, "<strong>$1</strong>");
     document.getElementById("review-attach").hidden = !refFile;
     var est = estimate(), box = document.getElementById("review-estimate");
+    box.hidden = cfg.showPricesOnSite === false;
     if (!est) box.innerHTML = '<span class="hand">estimate</span><strong>Pick a size</strong>';
     else if (est.custom) box.innerHTML = '<span class="hand">estimate</span><strong>Custom quote</strong><small>Four or more people: send your photo and I\'ll quote you.</small>';
     else box.innerHTML = '<span class="hand">estimate</span><strong>' + esc(money(est.total)) + "</strong>" +
@@ -325,15 +335,24 @@
   function init() {
     cfg = window.WLA_CONFIG;
     form = document.getElementById("enquiry-form");
-    if (!cfg || !form) return;
-    ["name", "phone", "notes", "ref"].forEach(function (k) { f[k] = document.getElementById("f-" + k); });
+    if (!cfg) return;
 
-    renderSizeGuide();
-    renderPriceCards();
-    renderStyles();
-    initCurrency();
-    refreshPrices();
+    if (document.getElementById("price-cards")) {   // full rate card (rates.html)
+      renderSizeGuide();
+      renderPriceCards();
+      renderStyles();
+      initCurrency();
+      refreshPrices();
+    } else {
+      renderIncludes();
+    }
+    if (!form) return;
+
+    ["name", "phone", "notes", "ref"].forEach(function (k) { f[k] = document.getElementById("f-" + k); });
     renderPickers();
+    // arriving from the rate card with a size picked: ./?size=A3#enquire
+    var q = (location.search.match(/[?&]size=(A[0-4])\b/) || [])[1];
+    if (q) setVal("size", q);
     initDropzone();
     if (cfg.contact.whatsappIsPlaceholder) document.getElementById("review-warn").hidden = false;
 

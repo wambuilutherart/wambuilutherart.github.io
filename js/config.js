@@ -63,6 +63,12 @@ window.WLA_CONFIG = {
   /* ---------- Commission pricing (from the official rate card) ----------
      prices[n] = price for n+1 people.  All amounts in KSh.               */
   currency: "KSh",
+  /* Prices are on request: the main site shows no prices (and no estimate in the
+     enquiry form). The full rate card lives at rates.html, which isn't linked from
+     the site or listed on Google. Send that link to clients who ask.
+     Set to true to show estimates on the main site again. */
+  showPricesOnSite: false,
+  rateCardRequestMessage: "Hello Wambui Luther Art! Could you please send me your rate card?",
   /* Other currencies shown on the price cards. Rates are fetched live each day
      (open.er-api.com, free, no key); "fallback" is used if that is unavailable.
      Values are KSh per 1 unit of the currency. Prices are always charged in KSh. */

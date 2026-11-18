@@ -1087,7 +1087,6 @@ html:not(.js) .story-toggle { display: none; }
 .art__hover-meta { font-size: .76rem; letter-spacing: .12em; text-transform: uppercase; color: rgba(255,255,255,.82); }
 .art__button:hover .art__hover, .art__button:focus-visible .art__hover { opacity: 1; }
 .art__button:hover .art__hover > *, .art__button:focus-visible .art__hover > * { translate: 0 0; }
-.art__tap { display: none; }
 
 /* prompt above the grid */
 .gallery-cta { display: flex; align-items: flex-end; gap: 10px; margin: -14px 0 30px; color: var(--charcoal); }
@@ -1100,11 +1099,6 @@ html:not(.js) .story-toggle { display: none; }
   .cta-hover { display: none; }
   .cta-touch { display: inline; }
   .art__hover { display: none; }
-  .art__tap {
-    position: absolute; right: 16px; bottom: 16px; display: grid; place-items: center;
-    width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,.92); color: var(--graphite);
-    box-shadow: 0 3px 10px -3px rgba(0,0,0,.35);
-  }
 }
 .art__button:hover img, .art__button:focus-visible img { transform: scale(1.03); }
 
@@ -1137,3 +1131,30 @@ html:not(.js) .story-toggle { display: none; }
 
 /* ---------- Story slides can be videos ---------- */
 .story__stage video { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; background: #222; }
+
+/* ---------- Rate card on request ---------- */
+.ratecard-cta {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 22px 40px;
+  padding: clamp(26px, 4vw, 44px); background: #F8F5EF; border: 1.3px solid rgba(41,39,37,.16);
+  border-radius: 2px 6px 3px 8px / 6px 2px 8px 3px;
+}
+.ratecard-cta__text { flex: 1 1 360px; min-width: 0; }
+.ratecard-cta__text .section-head__kicker { margin-bottom: 2px; }
+.ratecard-cta__text .sizes__title { margin-bottom: 10px; }
+.ratecard-cta__text p:last-child { margin: 0; max-width: 58ch; color: var(--charcoal); }
+.ratecard-cta__btn { flex: none; }
+.ratecard-cta + .includes { margin-top: 26px; }
+.ratecard-cta--end { margin-top: clamp(48px, 6vw, 80px); }
+
+/* rate card page */
+.ratecard-page .site-header { position: sticky; }
+.ratecard-page .ratecard { padding-top: clamp(48px, 7vw, 90px); }
+.ratecard-page .btn-wa { white-space: nowrap; }
+.ratecard-page .footer { padding-top: 10px; }
+.ratecard-page .footer__base { margin-top: 0; border-top: 0; }
+.ratecard-page .footer a { color: inherit; }
+@media (max-width: 640px) {
+  .ratecard-cta__btn { width: 100%; }
+  .ratecard-page .btn-wa span { display: none; }
+  .ratecard-page .btn-wa { width: 44px; height: 44px; padding: 0; justify-content: center; }
+}

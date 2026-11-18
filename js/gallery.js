@@ -58,7 +58,6 @@
   }
 
   /* ---------- Artwork cards ---------- */
-  var EXPAND = '<svg width="16" height="16" viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   function renderItems() {
     var frag = document.createDocumentFragment();
     cfg.artworks.forEach(function (a, i) {
@@ -79,7 +78,6 @@
                 '<span class="art__hover-title">' + esc(a.title) + "</span>" +
                 ([a.dimensions, a.year].filter(Boolean).length ? '<span class="art__hover-meta">' + [a.dimensions, a.year].filter(Boolean).map(esc).join(" · ") + "</span>" : "") +
               "</span>" +
-              '<span class="art__tap" aria-hidden="true">' + EXPAND + "</span>" +
             "</div>" +
           "</button>" +
         "</div>";
